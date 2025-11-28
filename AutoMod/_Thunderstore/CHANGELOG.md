@@ -1,4 +1,10 @@
 # Changelog
+## 1.0.6
+- Fixed kicking issue
+
+## 1.0.5
+- converted from OnGUI to EasySettings
+
 ## 1.0.4
 - characther clone still gay
 

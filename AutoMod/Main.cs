@@ -2,10 +2,6 @@
 using BepInEx.Configuration;
 using BepInEx.Logging;
 using HarmonyLib;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography; // Added for hashing
 using System.Text; // Added for hashing
@@ -354,7 +350,7 @@ namespace AutoModeration
                 WarnCount = currentWarnings,
                 MaxWarnings = maxWarnings
             };
-            SaveWarningToFile(record);
+            SaveWarningToFile(record.ToString());
 
             if (currentWarnings >= maxWarnings)
             {
@@ -366,26 +362,52 @@ namespace AutoModeration
         private static void TakeHostAction(Player targetPlayer, string targetPlayerName, string triggeringMessage)
         {
             if (HostConsole._current == null || targetPlayer.connectionToClient == null) return;
-            try
-            {
-                int connectionId = targetPlayer.connectionToClient.connectionId;
-                string action = Main.HostAction.Value.ToLower();
-                string command = action == "kick" ? $"/kick {connectionId}" : $"/ban {connectionId}";
+            
+            string action = Main.HostAction.Value.ToLower();
+            string punishmentDetails = $"Player {targetPlayerName} (ID: {targetPlayer._steamID}) was automatically {action.ToUpper()}ed. Reason: {triggeringMessage}";
 
-                Main.Log.LogInfo($"[AUTOMOD] Host executing command: \"{command}\" on player [{targetPlayerName}].");
-                HostConsole._current.Init_ServerMessage(command);
-                
-                string actionLog = $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] ACTION: Player {targetPlayerName} (ID: {targetPlayer._steamID}) was {action.ToUpper()}ed for accumulating too many warnings. Final straw: \"{triggeringMessage}\"";
-                SaveWarningToFile(actionLog);
+            Main.Log.LogWarning(punishmentDetails);
+            try { File.AppendAllText(Main.WarningLogPath, $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] [PUNISHMENT] " + punishmentDetails + Environment.NewLine); }
+            catch (Exception ex) { Main.Log.LogError($"Failed to write punishment to log: {ex.Message}"); }
+
+            if (HostConsole._current != null)
+            {
+                HostConsole._current.Init_ServerMessage("[AUTOMOD]: " + punishmentDetails);
             }
-            catch (Exception ex) { Main.Log.LogError($"[AUTOMOD] Failed to perform host action on [{targetPlayerName}]: {ex}"); }
+
+            if (action == "ban")
+            {
+                HC_PeerListEntry targetPeer = null;
+                if (HostConsole._current != null)
+                {
+                    foreach(var entry in HostConsole._current._peerListEntries)
+                    {
+                        if (entry._netId != null && entry._netId.netId == targetPlayer.netId) { targetPeer = entry; break; }
+                    }
+                }
+                        
+                if (targetPeer != null)
+                {
+                    HostConsole._current._selectedPeerEntry = targetPeer;
+                    HostConsole._current.Ban_Peer();
+                }
+                else
+                {
+                    targetPlayer.connectionToClient.Disconnect();
+                    Main.Log.LogError($"Could not find PeerListEntry for player {targetPlayerName} (netId: {targetPlayer.netId}) to BAN, kicked instead.");
+                }
+            }
+            else
+            {
+                targetPlayer.connectionToClient.Disconnect();
+            }
         }
 
-        private static void SaveWarningToFile(object record)
+        private static void SaveWarningToFile(string message)
         {
             try
             {
-                File.AppendAllText(Main.WarningLogPath, record.ToString() + Environment.NewLine);
+                File.AppendAllText(Main.WarningLogPath, message + Environment.NewLine);
             }
             catch (Exception ex)
             {
