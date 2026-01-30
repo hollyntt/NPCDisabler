@@ -6,6 +6,6 @@ namespace AutoModeration
     {
         public const string GUID = "s0apy";
         public const string NAME = "AutoModeration";
-        public const string VERSION = "1.0.6";
+        public const string VERSION = "1.0.7";
     }
 }

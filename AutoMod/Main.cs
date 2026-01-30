@@ -2,12 +2,15 @@
 using BepInEx.Configuration;
 using BepInEx.Logging;
 using HarmonyLib;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Reflection;
-using System.Security.Cryptography; // Added for hashing
-using System.Text; // Added for hashing
+using System.Security.Cryptography;
+using System.Text;
 using System.Text.RegularExpressions;
-
-// Assumed Game-Specific classes: AtlyssNetworkManager, Player, ChatBehaviour, HostConsole
+using UnityEngine;
 
 namespace AutoModeration
 {
@@ -63,13 +66,13 @@ namespace AutoModeration
         internal static ManualLogSource Log;
         internal static string WarningLogPath;
         
-        internal static List<BlockRule> ParsedBlockRules = [];
-        internal static HashSet<string> HashedBlockedWords = [];
+        internal static List<BlockRule> ParsedBlockRules = new List<BlockRule>();
+        internal static HashSet<string> HashedBlockedWords = new HashSet<string>();
 
-        internal static List<string> ParsedAllowedPhrases = [];
-        internal static List<Regex> ParsedRegexPatterns = [];
-        internal static Dictionary<string, int> PlayerWarningLevels = [];
-        internal static List<string> MonitoredChannels = [];
+        internal static List<string> ParsedAllowedPhrases = new List<string>();
+        internal static List<Regex> ParsedRegexPatterns = new List<Regex>();
+        internal static Dictionary<string, int> PlayerWarningLevels = new Dictionary<string, int>();
+        internal static List<string> MonitoredChannels = new List<string>();
 
         internal static ConfigEntry<bool> AutoModEnabled;
         internal static ConfigEntry<bool> DisableInSinglePlayer;
@@ -90,38 +93,17 @@ namespace AutoModeration
             string pluginFolder = Path.GetDirectoryName(Info.Location);
             WarningLogPath = Path.Combine(pluginFolder, "AutoMod_WarningLog.txt");
 
-            AutoModEnabled = Config.Bind("1. General", "Enabled", true,
-                "Enables the auto-moderator to block messages.");
-            
-            DisableInSinglePlayer = Config.Bind("1. General", "Disable in Single-Player", true,
-                "istg if u use ts on singleplayer i am NOT helping u fix this do not PM me.");
-
-            MonitoredChatChannels = Config.Bind("1. General", "Monitored Channels", "GLOBAL",
-                "Comma-separated list of chat channels to monitor. (e.g., GLOBAL, ROOM, PARTY). Case-insensitive.");
-
-            BlockedWords = Config.Bind("2. Word Filters", "Blocked Words", "*badword*, rude*, *insult, heck, crypto*",
-                "Comma-separated list of words/phrases to block. Use '*' for wildcards. Non-wildcard words are hashed for security.");
-
-            AllowedPhrases = Config.Bind("2. Word Filters", "Allowed Phrases (Whitelist)", "crypto, grapefruit, have a nice day",
-                "Comma-separated list of phrases that act as exceptions to your blocked words/patterns.");
-
-            RegexPatterns = Config.Bind("3. Advanced Filters", "Regex Patterns", "",
-                "Comma-separated list of Regex patterns for advanced filtering.");
-
-            EnableHostActions = Config.Bind("4. Punishments", "Enable Host Actions", true,
-                "If enabled, the host will automatically take action against players.");
-
-            HostAction = Config.Bind("4. Punishments", "Action Type", "Kick",
-                new ConfigDescription("The action to take when a player reaches the warning limit.", new AcceptableValueList<string>("Kick", "Ban")));
-
-            WarningSystemEnabled = Config.Bind("5. Warning System", "Enabled", true,
-                "Enable the progressive warning system. If false, punishments are immediate.");
-
-            WarningsUntilAction = Config.Bind("5. Warning System", "Warnings Until Action", 3,
-                "Number of infractions a player can have before the 'Action Type' is triggered.");
-
-            ResetWarningsOnDisconnect = Config.Bind("5. Warning System", "Reset Warnings On Disconnect", true,
-                "If true, a player's warning count is cleared when they leave the server.");
+            AutoModEnabled = Config.Bind("1. General", "Enabled", true, "Enables the auto-moderator to block messages.");
+            DisableInSinglePlayer = Config.Bind("1. General", "Disable in Single-Player", true, "Disable functionality in singleplayer.");
+            MonitoredChatChannels = Config.Bind("1. General", "Monitored Channels", "GLOBAL", "Comma-separated list of chat channels to monitor.");
+            BlockedWords = Config.Bind("2. Word Filters", "Blocked Words", "*badword*, rude*, *insult, heck, crypto*", "Comma-separated list of words/phrases to block.");
+            AllowedPhrases = Config.Bind("2. Word Filters", "Allowed Phrases (Whitelist)", "crypto, grapefruit, have a nice day", "Comma-separated list of phrases that act as exceptions.");
+            RegexPatterns = Config.Bind("3. Advanced Filters", "Regex Patterns", "", "Comma-separated list of Regex patterns.");
+            EnableHostActions = Config.Bind("4. Punishments", "Enable Host Actions", true, "If enabled, the host will automatically take action against players.");
+            HostAction = Config.Bind("4. Punishments", "Action Type", "Kick", new ConfigDescription("The action to take when a player reaches the warning limit.", new AcceptableValueList<string>("Kick", "Ban")));
+            WarningSystemEnabled = Config.Bind("5. Warning System", "Enabled", true, "Enable the progressive warning system.");
+            WarningsUntilAction = Config.Bind("5. Warning System", "Warnings Until Action", 3, "Number of infractions a player can have before action is taken.");
+            ResetWarningsOnDisconnect = Config.Bind("5. Warning System", "Reset Warnings On Disconnect", true, "If true, a player's warning count is cleared when they leave.");
 
             UpdateMonitoredChannelsList();
             UpdateBlockRulesList();
@@ -153,7 +135,6 @@ namespace AutoModeration
                 .Select(c => c.Trim().ToUpperInvariant())
                 .Where(c => !string.IsNullOrEmpty(c))
                 .ToList();
-            Log.LogInfo($"Auto-moderator will monitor the following channels: {string.Join(", ", MonitoredChannels)}");
         }
 
         private void UpdateBlockRulesList()
@@ -184,7 +165,6 @@ namespace AutoModeration
                     HashedBlockedWords.Add(hash);
                 }
             }
-            Log.LogInfo($"{HashedBlockedWords.Count} words hashed, {ParsedBlockRules.Count} wildcard rules loaded.");
         }
 
         private void UpdateAllowedPhrasesList()
@@ -233,21 +213,21 @@ namespace AutoModeration
                 FieldInfo playerField = typeof(ChatBehaviour).GetField("_player", BindingFlags.Instance | BindingFlags.NonPublic);
                 if (playerField?.GetValue(__instance) is Player playerWhoSentMessage)
                 {
+                    if (playerWhoSentMessage._isHostPlayer)
+                    {
+                        return true;
+                    }
+
                     string playerName = playerWhoSentMessage._nickname ?? "Unknown Player";
             
-                    // --- THE FIX IS HERE ---
-                    // Step 1: Sanitize the message. Create a temporary copy and remove all allowed phrases from it.
                     string messageToCheck = plainTextMessage;
                     foreach(string allowedPhrase in Main.ParsedAllowedPhrases)
                     {
-                        // Using Regex.Replace is more robust for case-insensitive replacements.
                         messageToCheck = Regex.Replace(messageToCheck, Regex.Escape(allowedPhrase), string.Empty, RegexOptions.IgnoreCase);
                     }
                     
-                    // Step 2: Check the SANITIZED message for any infractions.
                     string infractionReason = FindInfractionReason(messageToCheck);
             
-                    // If a reason is found AFTER removing exceptions, it is a confirmed violation.
                     if (!string.IsNullOrEmpty(infractionReason))
                     {
                         string logMessage = string.Format(
@@ -255,12 +235,12 @@ namespace AutoModeration
                             playerName,
                             _chatChannel,
                             infractionReason,
-                            plainTextMessage // Log the original message for context
+                            plainTextMessage
                         );
                         Main.Log.LogWarning(logMessage);
 
                         ProcessInfraction(playerWhoSentMessage, playerName, plainTextMessage);
-                        return false; // Block the message
+                        return false;
                     }
                 }
             }
@@ -269,7 +249,6 @@ namespace AutoModeration
                 Main.Log.LogError($"[AUTOMOD] Error during message interception: {ex}"); 
             }
     
-            // If the sanitized message is clean, allow it.
             return true;
         }
         
@@ -297,7 +276,7 @@ namespace AutoModeration
                 if (rule.IsMatch(message)) return $"matched wildcard rule '{rule.Pattern}'";
             }
             
-            char[] delimiters = [' ', '.', ',', '!', '?', ';', ':', '-', '_', '\n', '\r'];
+            char[] delimiters = new char[] { ' ', '.', ',', '!', '?', ';', ':', '-', '_', '\n', '\r' };
             string[] words = message.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
 
             foreach (string word in words)
@@ -323,11 +302,7 @@ namespace AutoModeration
         {
             if (Player._mainPlayer?._isHostPlayer != true) return;
 
-            if (!Main.WarningSystemEnabled.Value)
-            {
-                if (Main.EnableHostActions.Value) TakeHostAction(targetPlayer, targetPlayerName, triggeringMessage);
-                return;
-            }
+            if (targetPlayer._isHostPlayer) return;
 
             string playerId = targetPlayer._steamID;
             if (string.IsNullOrEmpty(playerId))

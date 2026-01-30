@@ -1,6 +1,6 @@
 is_global = true
 build_property.RootNamespace = AutoModeration
-build_property.ProjectDir = D:\Documents\CODE\Ours\AutoMod\AutoMod\
+build_property.ProjectDir = /run/media/soap/The Main Dr/Documents/CODE/Ours/AutoMod/AutoMod/
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.CsWinRTUseWindowsUIXamlProjections = false

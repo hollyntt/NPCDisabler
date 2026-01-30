@@ -1,4 +1,7 @@
 # Changelog
+## 1.0.7
+- Fixed host infraction bug
+
 ## 1.0.6
 - Fixed kicking issue
 

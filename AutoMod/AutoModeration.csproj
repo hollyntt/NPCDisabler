@@ -3,7 +3,7 @@
     <PropertyGroup>
         <Authors>com.AutoModeration</Authors>
         <Product>Auto Moderation</Product>
-        <Version>1.0.6</Version>
+        <Version>1.0.7</Version>
         <PackageId>Auto Moderation</PackageId>
     </PropertyGroup>
 
@@ -21,7 +21,7 @@
     </PropertyGroup>
     
     <PropertyGroup>
-        <AtlyssPath>..\..\..\..\..\SteamLibrary\steamapps\common\ATLYSS</AtlyssPath>
+        <AtlyssPath>..\..\..\..\..\..\..\..\..\home\soap\.local\share\Steam\steamapps\common\ATLYSS</AtlyssPath>
         <AtlyssManaged>$(AtlyssPath)\ATLYSS_Data\Managed\</AtlyssManaged>
     </PropertyGroup>
 
