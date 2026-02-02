@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("com.AutoModeration")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.7.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.7+20bfa4901c74b607aa83662b376e201c4b42d528")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.7+271d11194838324da840d7fc276316f0443d1575")]
 [assembly: System.Reflection.AssemblyProductAttribute("Auto Moderation")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AutoModeration")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.7.0")]

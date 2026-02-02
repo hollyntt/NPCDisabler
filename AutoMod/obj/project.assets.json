@@ -2810,7 +2810,7 @@
     "/home/soap/.nuget/packages/": {}
   },
   "project": {
-    "version": "1.0.6",
+    "version": "1.0.7",
     "restore": {
       "projectUniqueName": "/run/media/soap/The Main Dr/Documents/CODE/Ours/AutoMod/AutoMod/AutoModeration.csproj",
       "projectName": "Auto Moderation",
