@@ -14,6 +14,7 @@ using UnityEngine;
 
 namespace AutoModeration
 {
+    // --- DATA CLASSES ---
     public class WarningRecord
     {
         public DateTime Timestamp { get; set; }
@@ -52,13 +53,7 @@ namespace AutoModeration
         }
     }
 
-    public enum MatchType
-    {
-        Contains,
-        StartsWith,
-        EndsWith,
-        Exact
-    }
+    public enum MatchType { Contains, StartsWith, EndsWith, Exact }
 
     [BepInPlugin(ModInfo.GUID, ModInfo.NAME, ModInfo.VERSION)]
     public class Main : BaseUnityPlugin
@@ -66,52 +61,77 @@ namespace AutoModeration
         internal static ManualLogSource Log;
         internal static string WarningLogPath;
         
-        internal static List<BlockRule> ParsedBlockRules = new List<BlockRule>();
-        internal static HashSet<string> HashedBlockedWords = new HashSet<string>();
+        // --- HOST LISTS (KICK/BAN) ---
+        internal static List<BlockRule> HostBlockRules = new List<BlockRule>();
+        internal static HashSet<string> HostBlockedHashes = new HashSet<string>();
+        internal static List<Regex> HostRegexPatterns = new List<Regex>();
 
+        // --- CLIENT LISTS (CENSOR ONLY) ---
+        internal static List<BlockRule> ClientCensorRules = new List<BlockRule>();
+        internal static HashSet<string> ClientCensorHashes = new HashSet<string>();
+        
         internal static List<string> ParsedAllowedPhrases = new List<string>();
-        internal static List<Regex> ParsedRegexPatterns = new List<Regex>();
         internal static Dictionary<string, int> PlayerWarningLevels = new Dictionary<string, int>();
         internal static List<string> MonitoredChannels = new List<string>();
+        internal static HashSet<string> TrustedSteamIDsList = new HashSet<string>();
 
+        // --- CONFIGURATION ---
         internal static ConfigEntry<bool> AutoModEnabled;
         internal static ConfigEntry<bool> DisableInSinglePlayer;
         internal static ConfigEntry<string> MonitoredChatChannels;
-        internal static ConfigEntry<string> BlockedWords;
+        internal static ConfigEntry<string> TrustedUsers; 
         internal static ConfigEntry<string> AllowedPhrases;
-        internal static ConfigEntry<string> RegexPatterns;
+
+        // Host Configs
+        internal static ConfigEntry<string> HostBlockedWords;
+        internal static ConfigEntry<string> HostRegexPatternsConfig;
         internal static ConfigEntry<bool> EnableHostActions;
         internal static ConfigEntry<string> HostAction;
         internal static ConfigEntry<bool> WarningSystemEnabled;
         internal static ConfigEntry<int> WarningsUntilAction;
         internal static ConfigEntry<bool> ResetWarningsOnDisconnect;
 
+        // Client Configs
+        internal static ConfigEntry<string> ClientCensoredWords;
+        internal static ConfigEntry<string> CensorReplacementChar;
+
         private void Awake()
         {
             Log = Logger;
-            
             string pluginFolder = Path.GetDirectoryName(Info.Location);
             WarningLogPath = Path.Combine(pluginFolder, "AutoMod_WarningLog.txt");
 
-            AutoModEnabled = Config.Bind("1. General", "Enabled", true, "Enables the auto-moderator to block messages.");
+            // 1. General
+            AutoModEnabled = Config.Bind("1. General", "Enabled", true, "Enables the mod functionality.");
             DisableInSinglePlayer = Config.Bind("1. General", "Disable in Single-Player", true, "Disable functionality in singleplayer.");
             MonitoredChatChannels = Config.Bind("1. General", "Monitored Channels", "GLOBAL", "Comma-separated list of chat channels to monitor.");
-            BlockedWords = Config.Bind("2. Word Filters", "Blocked Words", "*badword*, rude*, *insult, heck, crypto*", "Comma-separated list of words/phrases to block.");
-            AllowedPhrases = Config.Bind("2. Word Filters", "Allowed Phrases (Whitelist)", "crypto, grapefruit, have a nice day", "Comma-separated list of phrases that act as exceptions.");
-            RegexPatterns = Config.Bind("3. Advanced Filters", "Regex Patterns", "", "Comma-separated list of Regex patterns.");
-            EnableHostActions = Config.Bind("4. Punishments", "Enable Host Actions", true, "If enabled, the host will automatically take action against players.");
-            HostAction = Config.Bind("4. Punishments", "Action Type", "Kick", new ConfigDescription("The action to take when a player reaches the warning limit.", new AcceptableValueList<string>("Kick", "Ban")));
-            WarningSystemEnabled = Config.Bind("5. Warning System", "Enabled", true, "Enable the progressive warning system.");
-            WarningsUntilAction = Config.Bind("5. Warning System", "Warnings Until Action", 3, "Number of infractions a player can have before action is taken.");
-            ResetWarningsOnDisconnect = Config.Bind("5. Warning System", "Reset Warnings On Disconnect", true, "If true, a player's warning count is cleared when they leave.");
+            
+            // 2. Exceptions & Trust
+            AllowedPhrases = Config.Bind("2. Exceptions", "Allowed Phrases (Whitelist)", "crypto, grapefruit, have a nice day", "Phrases that are always allowed (ignored by filter).");
+            TrustedUsers = Config.Bind("2. Exceptions", "Trusted Steam IDs", "76561198000000000", "Steam IDs that bypass ALL filters (Host and Client).");
+
+            // 3. HOST Filters (Kicks/Bans)
+            HostBlockedWords = Config.Bind("3. Host Filters (Server-Side)", "Blocked Words", "*badword*, rude*, *insult", "Words that trigger Host Actions (Kick/Ban). Only active when YOU are Host.");
+            HostRegexPatternsConfig = Config.Bind("3. Host Filters (Server-Side)", "Regex Patterns", "", "Regex patterns that trigger Host Actions.");
+            EnableHostActions = Config.Bind("3. Host Filters (Server-Side)", "Enable Punishments", true, "If true, the host will kick/ban players matching the Host Filters.");
+            HostAction = Config.Bind("3. Host Filters (Server-Side)", "Punishment Type", "Kick", new ConfigDescription("Action to take.", new AcceptableValueList<string>("Kick", "Ban")));
+            WarningSystemEnabled = Config.Bind("3. Host Filters (Server-Side)", "Warning System", true, "Enable progressive warnings.");
+            WarningsUntilAction = Config.Bind("3. Host Filters (Server-Side)", "Warnings Limit", 3, "Infractions before punishment.");
+            ResetWarningsOnDisconnect = Config.Bind("3. Host Filters (Server-Side)", "Reset on Disconnect", true, "Clear warnings when player leaves.");
+
+            // 4. CLIENT Filters (Censor Only)
+            ClientCensoredWords = Config.Bind("4. Client Filters (Local Only)", "Censored Words", "heck, darn", "Words that will be replaced with **** locally. Active in ANY server.");
+            CensorReplacementChar = Config.Bind("4. Client Filters (Local Only)", "Censor Character", "*", "The character used to hide words.");
 
             UpdateMonitoredChannelsList();
-            UpdateBlockRulesList();
             UpdateAllowedPhrasesList();
-            UpdateRegexPatternsList();
+            UpdateTrustedList();
+            UpdateRuleLists(HostBlockedWords.Value, HostBlockRules, HostBlockedHashes);
+            UpdateRuleLists(ClientCensoredWords.Value, ClientCensorRules, ClientCensorHashes);
+            UpdateRegexList();
 
             Harmony.CreateAndPatchAll(typeof(HarmonyPatches));
-            Log.LogInfo($"[{ModInfo.NAME} v{ModInfo.VERSION}] has loaded with cryptographic hashing. Warning log saved to: {WarningLogPath}");
+            Log.LogInfo($"[{ModInfo.NAME} v{ModInfo.VERSION}] loaded.");
         }
         
         internal static string ComputeSha256Hash(string rawData)
@@ -120,10 +140,7 @@ namespace AutoModeration
             {
                 byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(rawData));
                 StringBuilder builder = new StringBuilder();
-                for (int i = 0; i < bytes.Length; i++)
-                {
-                    builder.Append(bytes[i].ToString("x2"));
-                }
+                for (int i = 0; i < bytes.Length; i++) builder.Append(bytes[i].ToString("x2"));
                 return builder.ToString();
             }
         }
@@ -131,19 +148,33 @@ namespace AutoModeration
         private void UpdateMonitoredChannelsList()
         {
             if (string.IsNullOrWhiteSpace(MonitoredChatChannels.Value)) MonitoredChannels.Clear();
-            else MonitoredChannels = MonitoredChatChannels.Value.Split(',')
-                .Select(c => c.Trim().ToUpperInvariant())
-                .Where(c => !string.IsNullOrEmpty(c))
-                .ToList();
+            else MonitoredChannels = MonitoredChatChannels.Value.Split(',').Select(c => c.Trim().ToUpperInvariant()).Where(c => !string.IsNullOrEmpty(c)).ToList();
+        }
+        
+        private void UpdateTrustedList()
+        {
+            TrustedSteamIDsList.Clear();
+            if (string.IsNullOrWhiteSpace(TrustedUsers.Value)) return;
+            foreach(var id in TrustedUsers.Value.Split(','))
+            {
+                string cleanId = id.Trim();
+                if(!string.IsNullOrEmpty(cleanId)) TrustedSteamIDsList.Add(cleanId);
+            }
         }
 
-        private void UpdateBlockRulesList()
+        private void UpdateAllowedPhrasesList()
         {
-            ParsedBlockRules.Clear();
-            HashedBlockedWords.Clear();
-            if (string.IsNullOrWhiteSpace(BlockedWords.Value)) return;
+            if (string.IsNullOrWhiteSpace(AllowedPhrases.Value)) ParsedAllowedPhrases.Clear();
+            else ParsedAllowedPhrases = AllowedPhrases.Value.Split(',').Select(p => p.Trim()).Where(p => !string.IsNullOrEmpty(p)).ToList();
+        }
+
+        private void UpdateRuleLists(string configValue, List<BlockRule> rulesList, HashSet<string> hashesList)
+        {
+            rulesList.Clear();
+            hashesList.Clear();
+            if (string.IsNullOrWhiteSpace(configValue)) return;
             
-            var patterns = BlockedWords.Value.Split(',');
+            var patterns = configValue.Split(',');
             foreach (var pattern in patterns)
             {
                 string trimmed = pattern.Trim();
@@ -155,37 +186,31 @@ namespace AutoModeration
                     bool endsWithStar = trimmed.EndsWith("*");
                     string corePattern = trimmed.Trim('*');
                     
-                    if (startsWithStar && endsWithStar) ParsedBlockRules.Add(new BlockRule { Pattern = corePattern, Type = MatchType.Contains });
-                    else if (startsWithStar) ParsedBlockRules.Add(new BlockRule { Pattern = corePattern, Type = MatchType.EndsWith });
-                    else if (endsWithStar) ParsedBlockRules.Add(new BlockRule { Pattern = corePattern, Type = MatchType.StartsWith });
+                    if (startsWithStar && endsWithStar) rulesList.Add(new BlockRule { Pattern = corePattern, Type = MatchType.Contains });
+                    else if (startsWithStar) rulesList.Add(new BlockRule { Pattern = corePattern, Type = MatchType.EndsWith });
+                    else if (endsWithStar) rulesList.Add(new BlockRule { Pattern = corePattern, Type = MatchType.StartsWith });
+                    else rulesList.Add(new BlockRule { Pattern = trimmed, Type = MatchType.Contains });
                 }
                 else 
                 {
                     string hash = ComputeSha256Hash(trimmed.ToLowerInvariant());
-                    HashedBlockedWords.Add(hash);
+                    hashesList.Add(hash);
                 }
             }
         }
 
-        private void UpdateAllowedPhrasesList()
+        private void UpdateRegexList()
         {
-            if (string.IsNullOrWhiteSpace(AllowedPhrases.Value)) ParsedAllowedPhrases.Clear();
-            else ParsedAllowedPhrases = AllowedPhrases.Value.Split(',').Select(p => p.Trim()).Where(p => !string.IsNullOrEmpty(p)).ToList();
-        }
-
-        private void UpdateRegexPatternsList()
-        {
-            ParsedRegexPatterns.Clear();
-            if (string.IsNullOrWhiteSpace(RegexPatterns.Value)) return;
-            var patterns = RegexPatterns.Value.Split(',');
-            foreach (var pattern in patterns)
+            HostRegexPatterns.Clear();
+            if (string.IsNullOrWhiteSpace(HostRegexPatternsConfig.Value)) return;
+            foreach (var pattern in HostRegexPatternsConfig.Value.Split(','))
             {
                 try
                 {
-                    var trimmedPattern = pattern.Trim();
-                    if (!string.IsNullOrEmpty(trimmedPattern)) ParsedRegexPatterns.Add(new Regex(trimmedPattern, RegexOptions.Compiled | RegexOptions.IgnoreCase));
+                    var trimmed = pattern.Trim();
+                    if (!string.IsNullOrEmpty(trimmed)) HostRegexPatterns.Add(new Regex(trimmed, RegexOptions.Compiled | RegexOptions.IgnoreCase));
                 }
-                catch (Exception ex) { Log.LogError($"[AUTOMOD] Invalid Regex pattern '{pattern}' skipped. Error: {ex.Message}"); }
+                catch (Exception ex) { Log.LogError($"[AUTOMOD] Invalid Regex '{pattern}': {ex.Message}"); }
             }
         }
     }
@@ -194,31 +219,22 @@ namespace AutoModeration
     internal static class HarmonyPatches
     {
         [HarmonyPrefix, HarmonyPatch(typeof(ChatBehaviour), "UserCode_Rpc_RecieveChatMessage__String__Boolean__ChatChannel")]
-        internal static bool InterceptChatMessage_Prefix(ChatBehaviour __instance, string message, ChatBehaviour.ChatChannel _chatChannel)
+        internal static bool InterceptChatMessage_Prefix(ChatBehaviour __instance, ref string message, bool _isEmoteMessage, ChatBehaviour.ChatChannel _chatChannel)
         {
-            if (Main.DisableInSinglePlayer.Value && AtlyssNetworkManager._current._soloMode)
-            {
-                return true;
-            }
-
-            if (!Main.AutoModEnabled.Value || !Main.MonitoredChannels.Contains(_chatChannel.ToString().ToUpperInvariant()))
-            {
-                return true;
-            }
+            if (Main.DisableInSinglePlayer.Value && AtlyssNetworkManager._current != null && AtlyssNetworkManager._current._soloMode) return true;
+            if (!Main.AutoModEnabled.Value || !Main.MonitoredChannels.Contains(_chatChannel.ToString().ToUpperInvariant())) return true;
 
             try
             {
                 string plainTextMessage = Regex.Replace(message, "<color=#([0-9a-fA-F]{6})>|</color>", string.Empty);
                 
                 FieldInfo playerField = typeof(ChatBehaviour).GetField("_player", BindingFlags.Instance | BindingFlags.NonPublic);
-                if (playerField?.GetValue(__instance) is Player playerWhoSentMessage)
+                if (playerField != null && playerField.GetValue(__instance) is Player playerWhoSentMessage)
                 {
-                    if (playerWhoSentMessage._isHostPlayer)
-                    {
-                        return true;
-                    }
+                    if (playerWhoSentMessage._steamID != null && Main.TrustedSteamIDsList.Contains(playerWhoSentMessage._steamID)) return true;
+                    if (playerWhoSentMessage._isHostPlayer) return true; 
 
-                    string playerName = playerWhoSentMessage._nickname ?? "Unknown Player";
+                    string playerName = playerWhoSentMessage._nickname ?? "Unknown";
             
                     string messageToCheck = plainTextMessage;
                     foreach(string allowedPhrase in Main.ParsedAllowedPhrases)
@@ -226,92 +242,145 @@ namespace AutoModeration
                         messageToCheck = Regex.Replace(messageToCheck, Regex.Escape(allowedPhrase), string.Empty, RegexOptions.IgnoreCase);
                     }
                     
-                    string infractionReason = FindInfractionReason(messageToCheck);
-            
-                    if (!string.IsNullOrEmpty(infractionReason))
+                    // HOST LOGIC (Kick/Ban/Warn)
+                    if (Player._mainPlayer != null && Player._mainPlayer._isHostPlayer)
                     {
-                        string logMessage = string.Format(
-                            "[AUTOMOD] Infraction by [{0}] in channel [{1}]. Reason: {2}. Original Message: \"{3}\"",
-                            playerName,
-                            _chatChannel,
-                            infractionReason,
-                            plainTextMessage
-                        );
-                        Main.Log.LogWarning(logMessage);
+                        bool isHostInfraction = CheckList(messageToCheck, Main.HostBlockRules, Main.HostBlockedHashes, Main.HostRegexPatterns, out string hostReason);
+                        if (isHostInfraction)
+                        {
+                            string logMessage = $"[AUTOMOD HOST] Infraction by [{playerName}] in [{_chatChannel}]. Reason: {hostReason}. Msg: \"{plainTextMessage}\"";
+                            Main.Log.LogWarning(logMessage);
+                            
+                            ProcessHostInfraction(playerWhoSentMessage, playerName, plainTextMessage);
+                            
+                            return false; 
+                        }
+                    }
 
-                        ProcessInfraction(playerWhoSentMessage, playerName, plainTextMessage);
-                        return false;
+                    // CLIENT LOGIC (Censor)
+                    bool isClientInfraction = CheckList(messageToCheck, Main.ClientCensorRules, Main.ClientCensorHashes, null, out string clientReason);
+                    
+                    if (isClientInfraction)
+                    {
+                        message = CensorMessage(message, messageToCheck); 
+                        return true;
                     }
                 }
             }
             catch (Exception ex) 
             { 
-                Main.Log.LogError($"[AUTOMOD] Error during message interception: {ex}"); 
+                Main.Log.LogError($"[AUTOMOD] Error in Chat Patch: {ex}"); 
             }
     
             return true;
+        }
+
+        private static bool CheckList(string message, List<BlockRule> rules, HashSet<string> hashes, List<Regex> regexes, out string reason)
+        {
+            reason = string.Empty;
+            if (string.IsNullOrWhiteSpace(message)) return false;
+
+            foreach (BlockRule rule in rules)
+            {
+                if (rule.IsMatch(message)) 
+                {
+                    reason = $"rule '{rule.Pattern}'";
+                    return true;
+                }
+            }
+            
+            if (hashes.Count > 0)
+            {
+                char[] delimiters = new char[] { ' ', '.', ',', '!', '?', ';', ':', '-', '_', '\n', '\r', '"', '\'' };
+                string[] words = message.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
+                foreach (string word in words)
+                {
+                    if (string.IsNullOrWhiteSpace(word)) continue;
+                    string wordHash = Main.ComputeSha256Hash(word.ToLowerInvariant());
+                    if (hashes.Contains(wordHash))
+                    {
+                        reason = "hashed word";
+                        return true;
+                    }
+                }
+            }
+            
+            if (regexes != null)
+            {
+                foreach (Regex r in regexes)
+                {
+                    if (r.IsMatch(message)) 
+                    {
+                        reason = $"regex '{r}'";
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        private static string CensorMessage(string originalMessage, string messageToCheck)
+        {
+            string censorCharStr = Main.CensorReplacementChar.Value;
+            char censorChar = (string.IsNullOrEmpty(censorCharStr)) ? '*' : censorCharStr[0];
+            string processed = originalMessage;
+
+            foreach (BlockRule rule in Main.ClientCensorRules)
+            {
+                if (rule.IsMatch(processed))
+                {
+                     processed = Regex.Replace(processed, Regex.Escape(rule.Pattern), new string(censorChar, rule.Pattern.Length), RegexOptions.IgnoreCase);
+                }
+            }
+
+            string[] parts = Regex.Split(processed, @"(\s+|[.,!?;:\-_""'])"); 
+            StringBuilder sb = new StringBuilder();
+            foreach (string part in parts)
+            {
+                if (string.IsNullOrEmpty(part)) continue;
+                if (string.IsNullOrWhiteSpace(part) || part.Length < 2) 
+                {
+                    sb.Append(part);
+                    continue;
+                }
+
+                string wordHash = Main.ComputeSha256Hash(part.ToLowerInvariant());
+                if (Main.ClientCensorHashes.Contains(wordHash)) sb.Append(new string(censorChar, part.Length));
+                else sb.Append(part);
+            }
+            return sb.ToString();
         }
         
         [HarmonyPostfix, HarmonyPatch(typeof(HostConsole), "Destroy_PeerListEntry")]
         internal static void OnPlayerDisconnect_Postfix(HostConsole __instance, int _connID)
         {
             if (!Main.ResetWarningsOnDisconnect.Value) return;
-            var entry = __instance._peerListEntries.FirstOrDefault(e => e._dataID == _connID);
-            if (entry?._peerPlayer != null && !string.IsNullOrEmpty(entry._peerPlayer._steamID))
+
+            try 
             {
-                if (Main.PlayerWarningLevels.ContainsKey(entry._peerPlayer._steamID))
+                var entry = __instance._peerListEntries.FirstOrDefault(e => e._dataID == _connID);
+                if (entry != null && entry._peerPlayer != null && !string.IsNullOrEmpty(entry._peerPlayer._steamID))
                 {
-                    Main.PlayerWarningLevels.Remove(entry._peerPlayer._steamID);
-                    Main.Log.LogInfo($"[AUTOMOD] Cleared warnings for disconnected player: {entry._peerPlayer._nickname}");
+                    if (Main.PlayerWarningLevels.ContainsKey(entry._peerPlayer._steamID))
+                    {
+                        Main.PlayerWarningLevels.Remove(entry._peerPlayer._steamID);
+                        Main.Log.LogInfo($"[AUTOMOD] Cleared warnings for {entry._peerPlayer._nickname}");
+                    }
                 }
             }
+            catch(Exception) { }
         }
         
-        private static string FindInfractionReason(string message)
+        private static void ProcessHostInfraction(Player targetPlayer, string targetPlayerName, string triggeringMessage)
         {
-            if (string.IsNullOrWhiteSpace(message)) return string.Empty;
-
-            foreach (BlockRule rule in Main.ParsedBlockRules)
-            {
-                if (rule.IsMatch(message)) return $"matched wildcard rule '{rule.Pattern}'";
-            }
-            
-            char[] delimiters = new char[] { ' ', '.', ',', '!', '?', ';', ':', '-', '_', '\n', '\r' };
-            string[] words = message.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
-
-            foreach (string word in words)
-            {
-                if (string.IsNullOrWhiteSpace(word)) continue;
-                
-                string wordHash = Main.ComputeSha256Hash(word.ToLowerInvariant());
-                if (Main.HashedBlockedWords.Contains(wordHash))
-                {
-                    return $"matched hashed word '{word}'";
-                }
-            }
-            
-            foreach (Regex regex in Main.ParsedRegexPatterns)
-            {
-                if (regex.IsMatch(message)) return $"matched Regex pattern '{regex}'";
-            }
-
-            return string.Empty;
-        }
-        
-        private static void ProcessInfraction(Player targetPlayer, string targetPlayerName, string triggeringMessage)
-        {
-            if (Player._mainPlayer?._isHostPlayer != true) return;
-
-            if (targetPlayer._isHostPlayer) return;
+            if (Player._mainPlayer == null || !Player._mainPlayer._isHostPlayer) return;
 
             string playerId = targetPlayer._steamID;
-            if (string.IsNullOrEmpty(playerId))
-            {
-                Main.Log.LogError($"[AUTOMOD] Cannot warn player [{targetPlayerName}] - they have no Steam ID.");
-                return;
-            }
+            if (string.IsNullOrEmpty(playerId)) return;
 
             if (!Main.PlayerWarningLevels.ContainsKey(playerId)) Main.PlayerWarningLevels[playerId] = 0;
+            
             Main.PlayerWarningLevels[playerId]++;
             int currentWarnings = Main.PlayerWarningLevels[playerId];
             int maxWarnings = Main.WarningsUntilAction.Value;
@@ -326,11 +395,17 @@ namespace AutoModeration
                 MaxWarnings = maxWarnings
             };
             SaveWarningToFile(record.ToString());
-
-            if (currentWarnings >= maxWarnings)
+            
+            // UPDATED: Use HostConsole.Init_ServerMessage to broadcast warning to everyone
+            if (HostConsole._current != null)
             {
-                Main.Log.LogInfo($"[AUTOMOD] Player [{targetPlayerName}] reached {currentWarnings}/{maxWarnings} warnings. Taking action.");
-                if (Main.EnableHostActions.Value) TakeHostAction(targetPlayer, targetPlayerName, triggeringMessage);
+                string warnMsg = $"[AutoMod] Warning {currentWarnings}/{maxWarnings} for {targetPlayerName}.";
+                HostConsole._current.Init_ServerMessage(warnMsg);
+            }
+
+            if (currentWarnings >= maxWarnings && Main.EnableHostActions.Value)
+            {
+                TakeHostAction(targetPlayer, targetPlayerName, triggeringMessage);
             }
         }
         
@@ -339,25 +414,25 @@ namespace AutoModeration
             if (HostConsole._current == null || targetPlayer.connectionToClient == null) return;
             
             string action = Main.HostAction.Value.ToLower();
-            string punishmentDetails = $"Player {targetPlayerName} (ID: {targetPlayer._steamID}) was automatically {action.ToUpper()}ed. Reason: {triggeringMessage}";
+            string punishmentDetails = $"Player {targetPlayerName} (ID: {targetPlayer._steamID}) was automatically {action.ToUpper()}ED. Reason: {triggeringMessage}";
 
             Main.Log.LogWarning(punishmentDetails);
+            
             try { File.AppendAllText(Main.WarningLogPath, $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] [PUNISHMENT] " + punishmentDetails + Environment.NewLine); }
             catch (Exception ex) { Main.Log.LogError($"Failed to write punishment to log: {ex.Message}"); }
 
-            if (HostConsole._current != null)
-            {
-                HostConsole._current.Init_ServerMessage("[AUTOMOD]: " + punishmentDetails);
-            }
+            // Broadcast punishment to everyone
+            HostConsole._current.Init_ServerMessage($"[AutoMod] {targetPlayerName} has been {action}ed for offensive language.");
 
             if (action == "ban")
             {
                 HC_PeerListEntry targetPeer = null;
-                if (HostConsole._current != null)
+                foreach(var entry in HostConsole._current._peerListEntries)
                 {
-                    foreach(var entry in HostConsole._current._peerListEntries)
-                    {
-                        if (entry._netId != null && entry._netId.netId == targetPlayer.netId) { targetPeer = entry; break; }
+                    if (entry._netId != null && entry._netId.netId == targetPlayer.netId) 
+                    { 
+                        targetPeer = entry; 
+                        break; 
                     }
                 }
                         
@@ -366,10 +441,9 @@ namespace AutoModeration
                     HostConsole._current._selectedPeerEntry = targetPeer;
                     HostConsole._current.Ban_Peer();
                 }
-                else
+                else 
                 {
                     targetPlayer.connectionToClient.Disconnect();
-                    Main.Log.LogError($"Could not find PeerListEntry for player {targetPlayerName} (netId: {targetPlayer.netId}) to BAN, kicked instead.");
                 }
             }
             else
@@ -380,14 +454,8 @@ namespace AutoModeration
 
         private static void SaveWarningToFile(string message)
         {
-            try
-            {
-                File.AppendAllText(Main.WarningLogPath, message + Environment.NewLine);
-            }
-            catch (Exception ex)
-            {
-                Main.Log.LogError($"[AUTOMOD] Failed to write to warning log: {ex.Message}");
-            }
+            try { File.AppendAllText(Main.WarningLogPath, message + Environment.NewLine); }
+            catch (Exception) { }
         }
     }
 }

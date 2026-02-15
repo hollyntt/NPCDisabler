@@ -7,12 +7,12 @@
   "targets": {
     ".NETStandard,Version=v2.1": {},
     ".NETStandard,Version=v2.1/": {
-      "AutoModeration/1.0.7": {
+      "AutoModeration/1.1.0": {
         "dependencies": {
           "BepInEx.Analyzers": "1.0.8",
           "BepInEx.AssemblyPublicizer.MSBuild": "0.4.2",
           "BepInEx.Core": "5.4.21",
-          "Nessie-EasySettings": "1.1.3",
+          "Nessie-EasySettings": "1.3.0",
           "UnityEngine.Modules": "2022.3.62"
         },
         "runtime": {
@@ -131,11 +131,11 @@
           }
         }
       },
-      "Nessie-EasySettings/1.1.3": {
+      "Nessie-EasySettings/1.3.0": {
         "runtime": {
           "lib/netstandard2.0/EasySettings.dll": {
-            "assemblyVersion": "1.1.3.0",
-            "fileVersion": "1.1.3.0"
+            "assemblyVersion": "1.3.0.0",
+            "fileVersion": "1.3.0.0"
           }
         }
       },
@@ -658,7 +658,7 @@
     }
   },
   "libraries": {
-    "AutoModeration/1.0.7": {
+    "AutoModeration/1.1.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
@@ -733,12 +733,12 @@
       "path": "monomod.utils/21.12.13.1",
       "hashPath": "monomod.utils.21.12.13.1.nupkg.sha512"
     },
-    "Nessie-EasySettings/1.1.3": {
+    "Nessie-EasySettings/1.3.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-zyoJCLtMUDHJJ+5W3g21KFTqlNMB3CmhTlB5SaJV4KqVx0YPQoUMGbJbhz0CFRbE4g6P9HmcfM/WJthYOs+XpA==",
-      "path": "nessie-easysettings/1.1.3",
-      "hashPath": "nessie-easysettings.1.1.3.nupkg.sha512"
+      "sha512": "sha512-xYymbUuQ47vln9No56qbYm3k87PIs8wMJUa/MSRV0VpKtGUEfKQEdwsyVgNvNqi/64PL0SggQfQQUpY6VvH6lw==",
+      "path": "nessie-easysettings/1.3.0",
+      "hashPath": "nessie-easysettings.1.3.0.nupkg.sha512"
     },
     "System.Collections/4.3.0": {
       "type": "package",

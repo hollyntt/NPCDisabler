@@ -1,4 +1,9 @@
 # Changelog
+## 1.1.0
+- client-side blocking now has a seperate list from host/server-side
+- Added SteamID Filtering
+- Added ingame censoring
+
 ## 1.0.7
 - Fixed host infraction bug
 
