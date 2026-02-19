@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b3ebf9cb-5174-469c-b4b4-3dc17a842daf" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.TemplateMod/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.TemplateMod/.idea/.name" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.TemplateMod/.idea/indexLayout.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.TemplateMod/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/.idea/.idea.AutoMod.dir/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/.idea/.idea.AutoMod.dir/.idea/indexLayout.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/.idea/.idea.AutoMod.dir/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/AutoModeration.csproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/Directory.Build.props" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/Directory.Build.targets" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/Main.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/_Thunderstore/CHANGELOG.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/_Thunderstore/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/_Thunderstore/icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/_ThunderstoreBuild/s0apy-AutoModeration-1.1.0.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/AsmResolver.DotNet.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/AsmResolver.PE.File.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/AsmResolver.PE.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/AsmResolver.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/Assembly-CSharp.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/AutoMapRoom.deps.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/AutoMod.deps.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/AutoModeration.deps.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/AutoModeration.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/BepInEx.AssemblyPublicizer.MSBuild.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/BepInEx.AssemblyPublicizer.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/EasySettings.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/FizzySteamworks.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/Mirror.Components.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/Mirror.Transports.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/Mirror.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/SimpleWebTransport.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/System.Collections.NonGeneric.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/System.Collections.Specialized.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/System.ComponentModel.Primitives.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/System.ComponentModel.TypeConverter.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/System.ComponentModel.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/System.IO.FileSystem.Primitives.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/System.Linq.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/System.Reflection.TypeExtensions.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/System.Threading.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/Telepathy.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/Unity.TextMeshPro.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.AIModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.AccessibilityModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.AndroidJNIModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.AnimationModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.AssetBundleModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.AudioModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.ClothModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.ClusterInputModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.ClusterRendererModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.ContentLoadModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.CoreModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.CrashReportingModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.DSPGraphModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.DirectorModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.GIModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.GameCenterModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.GridModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.HotReloadModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.IMGUIModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.ImageConversionModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.InputLegacyModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.InputModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.JSONSerializeModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.LocalizationModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.ParticleSystemModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.PerformanceReportingModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.Physics2DModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.PhysicsModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.ProfilerModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.PropertiesModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.ScreenCaptureModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.SharedInternalsModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.SpriteMaskModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.SpriteShapeModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.StreamingModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.SubstanceModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.SubsystemsModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.TLSModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.TerrainModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.TerrainPhysicsModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.TextCoreFontEngineModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.TextCoreTextEngineModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.TextRenderingModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.TilemapModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.UI.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.UIElementsModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.UIModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.UmbraModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.UnityAnalyticsCommonModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.UnityAnalyticsModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.UnityConnectModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.UnityCurlModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.UnityTestProtocolModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.UnityWebRequestAssetBundleModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.UnityWebRequestAudioModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.UnityWebRequestModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.UnityWebRequestTextureModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.UnityWebRequestWWWModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.VFXModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.VRModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.VehiclesModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.VideoModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.VirtualTexturingModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.WindModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.XRModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/UnityEngine.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/_ThunderstoreBuild/AutoModeration.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/_ThunderstoreBuild/CHANGELOG.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/_ThunderstoreBuild/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/_ThunderstoreBuild/icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/_ThunderstoreBuild/manifest.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/com.rlabrecque.steamworks.net.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Debug/netstandard2.1/kcp2k.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/AsmResolver.DotNet.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/AsmResolver.PE.File.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/AsmResolver.PE.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/AsmResolver.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/AutoMapRoom.deps.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/AutoMapRoom.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/BepInEx.AssemblyPublicizer.MSBuild.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/BepInEx.AssemblyPublicizer.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/System.Collections.NonGeneric.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/System.Collections.Specialized.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/System.ComponentModel.Primitives.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/System.ComponentModel.TypeConverter.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/System.ComponentModel.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/System.IO.FileSystem.Primitives.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/System.Linq.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/System.Reflection.TypeExtensions.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/System.Threading.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.AIModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.AccessibilityModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.AndroidJNIModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.AnimationModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.AssetBundleModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.AudioModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.ClothModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.ClusterInputModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.ClusterRendererModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.ContentLoadModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.CoreModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.CrashReportingModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.DSPGraphModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.DirectorModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.GIModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.GameCenterModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.GridModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.HotReloadModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.IMGUIModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.ImageConversionModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.InputLegacyModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.InputModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.JSONSerializeModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.LocalizationModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.ParticleSystemModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.PerformanceReportingModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.Physics2DModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.PhysicsModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.ProfilerModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.PropertiesModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.ScreenCaptureModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.SharedInternalsModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.SpriteMaskModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.SpriteShapeModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.StreamingModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.SubstanceModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.SubsystemsModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.TLSModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.TerrainModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.TerrainPhysicsModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.TextCoreFontEngineModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.TextCoreTextEngineModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.TextRenderingModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.TilemapModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.UIElementsModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.UIModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.UmbraModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.UnityAnalyticsCommonModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.UnityAnalyticsModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.UnityConnectModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.UnityCurlModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.UnityTestProtocolModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.UnityWebRequestAssetBundleModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.UnityWebRequestAudioModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.UnityWebRequestModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.UnityWebRequestTextureModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.UnityWebRequestWWWModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.VFXModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.VRModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.VehiclesModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.VideoModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.VirtualTexturingModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.WindModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.XRModule.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/UnityEngine.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/_ThunderstoreBuild/AutoMapRoom.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/_ThunderstoreBuild/CHANGELOG.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/_ThunderstoreBuild/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/_ThunderstoreBuild/icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/bin/Release/netstandard2.1/_ThunderstoreBuild/manifest.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/AutoMapRoom.csproj.nuget.dgspec.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/AutoMapRoom.csproj.nuget.g.props" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/AutoMapRoom.csproj.nuget.g.targets" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/AutoMod.csproj.nuget.dgspec.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/AutoMod.csproj.nuget.g.props" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/AutoMod.csproj.nuget.g.targets" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/AutoModeration.csproj.nuget.dgspec.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/AutoModeration.csproj.nuget.g.props" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/AutoModeration.csproj.nuget.g.targets" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Debug/netstandard2.1/.NETStandard,Version=v2.1.AssemblyAttributes.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Debug/netstandard2.1/AutoMapR.A6E489EE.Up2Date" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Debug/netstandard2.1/AutoMapRoom.AssemblyInfo.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Debug/netstandard2.1/AutoMapRoom.AssemblyInfoInputs.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Debug/netstandard2.1/AutoMapRoom.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Debug/netstandard2.1/AutoMapRoom.GlobalUsings.g.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Debug/netstandard2.1/AutoMapRoom.IgnoresAccessChecksTo.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Debug/netstandard2.1/AutoMapRoom.assets.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Debug/netstandard2.1/AutoMapRoom.csproj.AssemblyReference.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Debug/netstandard2.1/AutoMapRoom.csproj.CoreCompileInputs.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Debug/netstandard2.1/AutoMapRoom.csproj.FileListAbsolute.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Debug/netstandard2.1/AutoMapRoom.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Debug/netstandard2.1/AutoMapRoom.sourcelink.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Debug/netstandard2.1/AutoMod.AssemblyInfo.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Debug/netstandard2.1/AutoMod.AssemblyInfoInputs.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Debug/netstandard2.1/AutoMod.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Debug/netstandard2.1/AutoMod.GlobalUsings.g.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Debug/netstandard2.1/AutoMod.IgnoresAccessChecksTo.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Debug/netstandard2.1/AutoMod.assets.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Debug/netstandard2.1/AutoMod.csproj.AssemblyReference.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Debug/netstandard2.1/AutoMod.csproj.CoreCompileInputs.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Debug/netstandard2.1/AutoMod.csproj.FileListAbsolute.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Debug/netstandard2.1/AutoMod.csproj.Up2Date" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Debug/netstandard2.1/AutoMod.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Debug/netstandard2.1/AutoMod.sourcelink.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Debug/netstandard2.1/AutoMode.760CE183.Up2Date" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Debug/netstandard2.1/AutoModeration.AssemblyInfo.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Debug/netstandard2.1/AutoModeration.AssemblyInfoInputs.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Debug/netstandard2.1/AutoModeration.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Debug/netstandard2.1/AutoModeration.GlobalUsings.g.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Debug/netstandard2.1/AutoModeration.IgnoresAccessChecksTo.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Debug/netstandard2.1/AutoModeration.assets.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Debug/netstandard2.1/AutoModeration.csproj.AssemblyReference.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Debug/netstandard2.1/AutoModeration.csproj.CoreCompileInputs.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Debug/netstandard2.1/AutoModeration.csproj.FileListAbsolute.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Debug/netstandard2.1/AutoModeration.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Debug/netstandard2.1/AutoModeration.sourcelink.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Debug/netstandard2.1/GeneratedModInfo.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Release/netstandard2.1/.NETStandard,Version=v2.1.AssemblyAttributes.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Release/netstandard2.1/AutoMapR.A6E489EE.Up2Date" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Release/netstandard2.1/AutoMapRoom.AssemblyInfo.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Release/netstandard2.1/AutoMapRoom.AssemblyInfoInputs.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Release/netstandard2.1/AutoMapRoom.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Release/netstandard2.1/AutoMapRoom.GlobalUsings.g.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Release/netstandard2.1/AutoMapRoom.IgnoresAccessChecksTo.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Release/netstandard2.1/AutoMapRoom.assets.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Release/netstandard2.1/AutoMapRoom.csproj.AssemblyReference.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Release/netstandard2.1/AutoMapRoom.csproj.CoreCompileInputs.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Release/netstandard2.1/AutoMapRoom.csproj.FileListAbsolute.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Release/netstandard2.1/AutoMapRoom.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Release/netstandard2.1/AutoMapRoom.sourcelink.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Release/netstandard2.1/GeneratedModInfo.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Release/netstandard2.1/publicized/Assembly-CSharp.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/Release/netstandard2.1/publicized/Assembly-CSharp.dll.md5" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/project.assets.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/project.nuget.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/project.packagespec.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/rider.project.model.nuget.info" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AutoMod/obj/rider.project.restore.info" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TemplateMod.sln" beforeDir="false" afterPath="$PROJECT_DIR$/PModeration.sln" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitLabMergeRequestFiltersHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPENED",
+    "assignee": {
+      "type": "org.jetbrains.plugins.gitlab.mergerequest.ui.filters.GitLabMergeRequestsFiltersValue.MergeRequestsMemberFilterValue.MergeRequestsAssigneeFilterValue",
+      "username": "hollyntii",
+      "fullname": "hollyn"
+    }
+  }
+}]]></component>
+  <component name="GitLabMergeRequestsSettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "first": "https://gitlab.com/hollyntii/TemplateMod.git",
+    "second": "6f6b1b78-0fb1-4171-8aa4-fa3c4a720a5a"
+  }
+}]]></component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2fcad04139bd48c4b2ef70179c022e44141c00/1f/38e5a9e2/ChatBehaviour.cs" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="Toolset" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 3
+}]]></component>
+  <component name="ProjectId" id="39sI7prA2JgGXdVsTb6hhno44ET" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "git-widget-placeholder": "main",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b3ebf9cb-5174-469c-b4b4-3dc17a842daf" name="Changes" comment="" />
+      <created>1771478187531</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1771478187531</updated>
+      <workItem from="1771478189276" duration="1425000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
+  <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
+  <component name="UnityProjectDiscoverer">
+    <option name="hasUnityReference" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="DotNet_Exception_Breakpoints">
+          <properties exception="System.OperationCanceledException" breakIfHandledByOtherCode="false" displayValue="System.OperationCanceledException" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+        <breakpoint enabled="true" type="DotNet_Exception_Breakpoints">
+          <properties exception="System.Threading.Tasks.TaskCanceledException" breakIfHandledByOtherCode="false" displayValue="System.Threading.Tasks.TaskCanceledException" />
+          <option name="timeStamp" value="2" />
+        </breakpoint>
+        <breakpoint enabled="true" type="DotNet_Exception_Breakpoints">
+          <properties exception="System.Threading.ThreadAbortException" breakIfHandledByOtherCode="false" displayValue="System.Threading.ThreadAbortException" />
+          <option name="timeStamp" value="3" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
