@@ -1,7 +1,3 @@
-```markdown
-THIS IS A CLOSED BETA TEST BUILD, PLEASE DO NOT 
-MAKE THIS PUBLICATED AS IT IS NOT A FINAL PRODUCT.
-```
 # PModeration
 
 **Personal client-side player hiding & blocking for Atlyss**  

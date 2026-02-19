@@ -93,3 +93,4 @@
 /run/media/soap/The Main Dr/Documents/CODE/Ours/PlayerModeration/PModeration/obj/Debug/netstandard2.1/PModeration.csproj.CoreCompileInputs.cache
 /run/media/soap/The Main Dr/Documents/CODE/Ours/PlayerModeration/PModeration/obj/Debug/netstandard2.1/PModerat.432CA5F1.Up2Date
 /run/media/soap/The Main Dr/Documents/CODE/Ours/PlayerModeration/PModeration/obj/Debug/netstandard2.1/PModeration.dll
+/run/media/soap/The Main Dr/Documents/CODE/Ours/PlayerModeration/PModeration/obj/Debug/netstandard2.1/PModeration.sourcelink.json
