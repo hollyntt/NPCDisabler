@@ -10,7 +10,7 @@
         <BepInExPluginGuid>com.PModeration.sftwre</BepInExPluginGuid>
         <CreateThunderstorePackage>true</CreateThunderstorePackage>
         <ThunderstorePackageName>PModeration</ThunderstorePackageName>
-        <ThunderstoreTeamName>s0apy</ThunderstoreTeamName>
+        <ThunderstoreTeamName>s0apysfederati0n</ThunderstoreTeamName>
         <ThunderstorePackageDescription>Get Personal, The block button is enough!</ThunderstorePackageDescription>
         <ThunderstoreWebsite>https://discord.gg/ePhX4Fb2we</ThunderstoreWebsite>
     </PropertyGroup>
