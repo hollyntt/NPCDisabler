@@ -332,6 +332,9 @@ namespace PModeration
         public static bool IsPlayerBlocked(ulong steamID) => Plugin.Instance.IsBlocked(steamID);
         public static void BlockPlayer(ulong steamID) => Plugin.Instance.AddBlock(steamID);
         public static void UnblockPlayer(ulong steamID) => Plugin.Instance.RemoveBlock(steamID);
+        public static void HideGlobalName(ulong steamID) => Plugin.Instance.HideGlobalName(steamID);
+        public static void UnhideGlobalName(ulong steamID) => Plugin.Instance.UnhideGlobalName(steamID);
+        public static void IsGlobalNameHidden(ulong steamID) => Plugin.Instance.IsGlobalNameHidden(steamID);
         public static event Action<ulong> OnPlayerBlocked;
         public static event Action<ulong> OnPlayerUnblocked;
         internal static void NotifyBlocked(ulong id) => OnPlayerBlocked?.Invoke(id);
