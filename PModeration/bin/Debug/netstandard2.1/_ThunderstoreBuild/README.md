@@ -35,6 +35,8 @@ Purely **client-side** — no host involvement, no mutual visibility, no drama. 
 - `/blockexport` — Save blocklist to file  
 - `/blockimport <path>` — Load blocklist from file  
 - `/blockhelp` — Shows command lists
+- `/hideglobal <name>` — hides only the @GlobalName text for that player (model, RP title, location, etc. stay visible)
+- `/unhideglobal <name-or-ID>` — shows the @GlobalName again
 
 ### Configuration (via Mod Settings or .cfg)
 

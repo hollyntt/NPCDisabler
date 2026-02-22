@@ -1,156 +1,189 @@
-// ────────────────────────────────────────────────
-//  UIBlockHelper.cs
-//  Adds a Block button to WhoListDataEntry objects.
-// ────────────────────────────────────────────────
 using UnityEngine;
 using UnityEngine.UI;
 using System.Reflection;
+using System.Linq;
+using Object = UnityEngine.Object;
 
-namespace PModeration;
-
-public static class UIBlockHelper
+namespace PModeration
 {
-    private const string BLOCK_BUTTON_NAME = "BlockButton";
-    private const string ICON_CHILD_NAME   = "_icon_steamProfile";
-
-    private static Sprite _blockSprite;
-    private static Sprite _unblockSprite;
-    private static bool   _spritesLoaded = false;
-
-    private static void EnsureSpritesLoaded()
+    public static class UIBlockHelper
     {
-        if (_spritesLoaded) return;
-        _spritesLoaded = true;
+        private const string BLOCK_BUTTON_NAME = "BlockButton";
+        private const string GLOBALNAME_BUTTON_NAME = "GlobalNameButton";
+        private const string HEADER_NAME = "_dolly_whoInfo_header";
+        private const string REF_BUTTON_NAME = "_button_steamProfile";
+        
+        // Text objects that squish our buttons
+        private const string GLOBAL_TEXT_NAME = "_text_globalName";
+        private const string CHAR_TEXT_NAME = "_text_characterName";
 
-        _blockSprite   = LoadSprite("PModeration.icons.block.png");
-        _unblockSprite = LoadSprite("PModeration.icons.unblock.png");
-    }
+        private static Sprite _blockSprite;
+        private static Sprite _unblockSprite;
+        private static Sprite _globalShowSprite;
+        private static Sprite _globalHideSprite;
+        private static bool _spritesLoaded = false;
 
-    private static Sprite LoadSprite(string resourceName)
-    {
-        var assembly = Assembly.GetExecutingAssembly();
-
-        using var stream = assembly.GetManifestResourceStream(resourceName);
-        if (stream == null)
+        private static void EnsureSpritesLoaded()
         {
-            Plugin.Log.LogWarning($"UIBlockHelper: Embedded resource '{resourceName}' not found.");
-            return null;
+            if (_spritesLoaded) return;
+            _spritesLoaded = true;
+
+            // Brute-force find the resources to avoid namespace typo issues
+            _blockSprite = LoadSpriteSmart("block.png");
+            _unblockSprite = LoadSpriteSmart("unblock.png");
+            _globalShowSprite = LoadSpriteSmart("globalshow.png");
+            _globalHideSprite = LoadSpriteSmart("globalhide.png");
         }
 
-        byte[] data = new byte[stream.Length];
-        stream.Read(data, 0, data.Length);
-
-        var tex = new Texture2D(2, 2, TextureFormat.RGBA32, false);
-        if (!tex.LoadImage(data))
+        private static Sprite LoadSpriteSmart(string fileNameEndsWith)
         {
-            Plugin.Log.LogWarning($"UIBlockHelper: Failed to decode '{resourceName}'");
-            return null;
-        }
+            var assembly = Assembly.GetExecutingAssembly();
+            // Find full name like "PModeration.icons.block.png" or "PModeration.block.png"
+            string resourceName = assembly.GetManifestResourceNames().FirstOrDefault(n => n.EndsWith(fileNameEndsWith, System.StringComparison.OrdinalIgnoreCase));
 
-        tex.filterMode = FilterMode.Bilinear;
-        var sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f), 100f);
-
-        if (Plugin.CfgDebugMode.Value)
-            Plugin.Log.LogInfo($"UIBlockHelper: Loaded '{resourceName}' successfully.");
-
-        return sprite;
-    }
-
-    public static void AddOrUpdateBlockButton(GameObject entryObj, Player player)
-    {
-        if (entryObj == null || player == null || !ulong.TryParse(player._steamID, out ulong steamID))
-        {
-            Plugin.Log.LogWarning("UIBlockHelper: Invalid entry or player");
-            return;
-        }
-
-        EnsureSpritesLoaded();
-
-        // Already exists — just refresh state
-        Transform existing = entryObj.transform.Find(BLOCK_BUTTON_NAME);
-        if (existing != null)
-        {
-            UpdateButtonState(existing.gameObject, steamID);
-            return;
-        }
-
-        // Reference button to clone from
-        WhoListDataEntry dataEntry = entryObj.GetComponent<WhoListDataEntry>();
-        GameObject refBtnObj = dataEntry?._steamProfileButton?.gameObject
-                            ?? dataEntry?._dataEntryButton?.gameObject
-                            ?? entryObj.GetComponentInChildren<Button>(true)?.gameObject;
-
-        if (refBtnObj == null)
-        {
-            Plugin.Log.LogWarning($"UIBlockHelper: No button found to clone in '{entryObj.name}'");
-            return;
-        }
-
-        // Clone
-        GameObject blockBtnObj = UnityEngine.Object.Instantiate(refBtnObj, refBtnObj.transform.parent);
-        blockBtnObj.name = BLOCK_BUTTON_NAME;
-        blockBtnObj.transform.SetSiblingIndex(refBtnObj.transform.GetSiblingIndex() + 1);
-
-        Button blockBtn = blockBtnObj.GetComponent<Button>();
-        if (blockBtn == null)
-        {
-            Plugin.Log.LogWarning("UIBlockHelper: Cloned object has no Button component");
-            UnityEngine.Object.Destroy(blockBtnObj);
-            return;
-        }
-
-        // Disable Unity's transition system so it doesn't fight our icon/tint
-        blockBtn.transition = Selectable.Transition.None;
-
-        // Clear leftover text
-        var label = blockBtnObj.GetComponentInChildren<Text>(true);
-        if (label != null) label.text = string.Empty;
-
-        // Wire up click
-        ulong capturedID    = steamID;
-        string capturedName = player._nickname;
-        blockBtn.onClick.RemoveAllListeners();
-        blockBtn.onClick.AddListener(() =>
-        {
-            if (PModerationAPI.IsPlayerBlocked(capturedID))
+            if (string.IsNullOrEmpty(resourceName))
             {
-                PModerationAPI.UnblockPlayer(capturedID);
-                if (Plugin.CfgDebugMode.Value)
-                    Plugin.Log.LogInfo($"Unblocked {capturedName} ({capturedID}) via UI button");
-            }
-            else
-            {
-                PModerationAPI.BlockPlayer(capturedID);
-                if (Plugin.CfgDebugMode.Value)
-                    Plugin.Log.LogInfo($"Blocked {capturedName} ({capturedID}) via UI button");
+                Plugin.Log.LogError($"[UIBlockHelper] MISSING RESOURCE ending with: '{fileNameEndsWith}'");
+                return null;
             }
 
-            Plugin.Instance.ForceRefreshAll();
-            UpdateButtonState(blockBtnObj, capturedID);
-        });
+            using var stream = assembly.GetManifestResourceStream(resourceName);
+            if (stream == null) return null;
 
-        UpdateButtonState(blockBtnObj, steamID);
-
-        if (Plugin.CfgDebugMode.Value)
-            Plugin.Log.LogInfo($"UIBlockHelper: Added Block button for {player._nickname} ({steamID})");
-    }
-
-    private static void UpdateButtonState(GameObject btnObj, ulong steamID)
-    {
-        if (btnObj == null) return;
-        bool isBlocked = PModerationAPI.IsPlayerBlocked(steamID);
-
-        Transform iconChild = btnObj.transform.Find(ICON_CHILD_NAME);
-        Image img = iconChild?.GetComponent<Image>() ?? btnObj.GetComponent<Image>();
-
-        if (img != null)
-        {
-            // Swap sprite: block icon when not blocked, unblock icon when blocked
-            img.sprite = isBlocked ? _unblockSprite : _blockSprite;
-            img.color  = Color.white; // no tint needed — icons are self-explanatory
+            byte[] data = new byte[stream.Length];
+            stream.Read(data, 0, data.Length);
+            Texture2D tex = new Texture2D(2, 2);
+            tex.LoadImage(data);
+            return Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f));
         }
 
-        if (Plugin.CfgDebugMode.Value)
-            Plugin.Log.LogInfo($"UIBlockHelper: UpdateButtonState — isBlocked={isBlocked}, img={(img != null ? img.name : "null")}");
+        public static void AddOrUpdateBlockButton(GameObject entryObj, Player player)
+        {
+            AddOrUpdateButton(entryObj, player, BLOCK_BUTTON_NAME, false);
+        }
+
+        public static void AddOrUpdateGlobalNameButton(GameObject entryObj, Player player)
+        {
+            AddOrUpdateButton(entryObj, player, GLOBALNAME_BUTTON_NAME, true);
+        }
+
+        private static void AddOrUpdateButton(GameObject entryObj, Player player, string buttonName, bool isGlobalName)
+        {
+            if (entryObj == null || player == null || !ulong.TryParse(player._steamID, out ulong steamID))
+                return;
+
+            Transform header = FindChildRecursive(entryObj.transform, HEADER_NAME);
+            if (header == null) return;
+
+            // --- LAYOUT FIX: Fix overlapping text ---
+            ApplyLayoutConstraint(header, CHAR_TEXT_NAME, 80f);
+            ApplyLayoutConstraint(header, GLOBAL_TEXT_NAME, 70f);
+
+            // Shift Header Left slightly to make room (x = -15 as requested)
+            RectTransform headerRect = header.GetComponent<RectTransform>();
+            if (headerRect != null && headerRect.anchoredPosition.x > -10)
+            {
+                headerRect.anchoredPosition = new Vector2(-15f, headerRect.anchoredPosition.y);
+            }
+            // ----------------------------------------
+
+            // Check if button exists
+            Transform existingBtn = header.Find(buttonName);
+            if (existingBtn != null)
+            {
+                UpdateButtonState(existingBtn.gameObject, steamID, isGlobalName);
+                return;
+            }
+
+            // Find reference
+            Transform refBtn = header.Find(REF_BUTTON_NAME);
+            if (refBtn == null) return;
+
+            // Clone
+            GameObject btnObj = Object.Instantiate(refBtn.gameObject, header);
+            btnObj.name = buttonName;
+            btnObj.SetActive(true);
+            btnObj.transform.SetSiblingIndex(refBtn.GetSiblingIndex() + 1);
+
+            // Setup Logic
+            Button btn = btnObj.GetComponent<Button>();
+            btn.onClick.RemoveAllListeners();
+            btn.onClick.AddListener(() =>
+            {
+                bool wasActive = isGlobalName ? Plugin.Instance.IsGlobalNameHidden(steamID) : Plugin.Instance.IsBlocked(steamID);
+                
+                if (wasActive)
+                {
+                    if (isGlobalName) Plugin.Instance.UnhideGlobalName(steamID);
+                    else Plugin.Instance.RemoveBlock(steamID);
+                }
+                else
+                {
+                    if (isGlobalName) Plugin.Instance.HideGlobalName(steamID);
+                    else Plugin.Instance.AddBlock(steamID, player._nickname);
+                }
+                UpdateButtonState(btnObj, steamID, isGlobalName);
+            });
+
+            UpdateButtonState(btnObj, steamID, isGlobalName);
+        }
+
+        private static void ApplyLayoutConstraint(Transform header, string childName, float width)
+        {
+            Transform textObj = header.Find(childName);
+            if (textObj != null)
+            {
+                var layout = textObj.GetComponent<LayoutElement>();
+                if (layout == null) layout = textObj.gameObject.AddComponent<LayoutElement>();
+                
+                // Flexible width 0 means "Don't expand to fill empty space"
+                // Preferred width sets the target size
+                layout.flexibleWidth = 0f; 
+                layout.preferredWidth = width;
+            }
+        }
+
+        private static void UpdateButtonState(GameObject btnObj, ulong steamID, bool isGlobalName)
+        {
+            if (btnObj == null) return;
+            EnsureSpritesLoaded();
+
+            bool isActive = isGlobalName ? Plugin.Instance.IsGlobalNameHidden(steamID) : Plugin.Instance.IsBlocked(steamID);
+
+            Image img = null;
+            // Robust icon finder
+            Transform iconTrans = FindChildRecursive(btnObj.transform, "_icon_steamProfile") ?? 
+                                  FindChildRecursive(btnObj.transform, "Icon") ?? 
+                                  FindChildRecursive(btnObj.transform, "Image");
+            
+            if (iconTrans != null) img = iconTrans.GetComponent<Image>();
+            else img = btnObj.GetComponent<Image>();
+
+            if (img != null)
+            {
+                if (isGlobalName)
+                {
+                    // Hidden = Show 'Eye' (Show) | Visible = Show 'Cross' (Hide)
+                    img.sprite = isActive ? _globalShowSprite : _globalHideSprite;
+                }
+                else
+                {
+                    // Blocked = Show Unblock | Not Blocked = Show Block
+                    img.sprite = isActive ? _unblockSprite : _blockSprite;
+                }
+                img.color = Color.white;
+            }
+        }
+
+        private static Transform FindChildRecursive(Transform parent, string name)
+        {
+            foreach (Transform child in parent)
+            {
+                if (child.name.Equals(name)) return child;
+                Transform found = FindChildRecursive(child, name);
+                if (found != null) return found;
+            }
+            return null;
+        }
     }
 }

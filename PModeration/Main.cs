@@ -11,14 +11,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 using Newtonsoft.Json;
+using System.Reflection;
 
 namespace PModeration
 {
     [BepInPlugin(ModInfo.GUID, ModInfo.NAME, ModInfo.VERSION)]
     [BepInDependency("Soggy_Pancake.CommandLib")]
-    [BepInDependency("EasySettings", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("Nessie.ATLYSS.EasySettings", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("CodeTalker")]
     public class Plugin : BaseUnityPlugin
     {
@@ -28,60 +28,161 @@ namespace PModeration
 
         // --- CONFIG ---
         public static ConfigEntry<bool> CfgEnabled;
-        public static ConfigEntry<bool> CfgHardBlock; // default false (soft block safer)
+        public static ConfigEntry<bool> CfgHardBlock;
         public static ConfigEntry<bool> CfgCensorChat;
         public static ConfigEntry<string> CfgCensorReplacement;
         public static ConfigEntry<bool> CfgDebugMode;
 
         // --- DATA ---
         public static HashSet<ulong> BlockedSteamIDs = new HashSet<ulong>();
+        public static HashSet<ulong> HiddenGlobalNameIDs = new HashSet<ulong>();
+        
         private string blockListPath;
-
+        private string globalNameListPath;
         private float visualRefreshTimer = 0f;
-        private const float REFRESH_RATE = 1.0f;
+        private const string TARGET_GLOBAL_OBJ_NAME = "_text_playerGlobalName";
 
         void Awake()
         {
             Instance = this;
             Log = Logger;
             blockListPath = Path.Combine(Paths.ConfigPath, "PModeration_BlockList.json");
+            globalNameListPath = Path.Combine(Paths.ConfigPath, "PModeration_GlobalNameHides.json");
 
             InitConfig();
+            
             Settings.OnInitialized.AddListener(AddSettings);
-            Settings.OnApplySettings.AddListener(() =>
-            {
-                Config.Save();
-                ForceRefreshAll();
-            });
+            Settings.OnApplySettings.AddListener(() => { Config.Save(); ForceRefreshAll(); });
 
             LoadBlockList();
+            LoadGlobalNameList();
             RegisterModCommands();
 
             harmony.PatchAll();
-
             Log.LogInfo($"{ModInfo.NAME} v{ModInfo.VERSION} Loaded.");
-            Log.LogInfo("PModeration API is available for other mods: PModeration.PModerationAPI");
         }
 
         void Update()
         {
             if (!CfgEnabled.Value) return;
-
             visualRefreshTimer += Time.deltaTime;
-            if (visualRefreshTimer >= REFRESH_RATE)
+            if (visualRefreshTimer >= 1.0f) { visualRefreshTimer = 0f; RefreshBlockedPlayersInScene(); }
+        }
+
+        private void ProcessPlayer(Player p)
+        {
+            if (p == null || p.isLocalPlayer) return;
+            if (!ulong.TryParse(p._steamID, out ulong sID)) return;
+
+            bool isBlocked = BlockedSteamIDs.Contains(sID) && CfgEnabled.Value;
+            bool isGlobalHidden = HiddenGlobalNameIDs.Contains(sID);
+
+            // 1. Block Logic
+            if (CfgHardBlock.Value)
             {
-                visualRefreshTimer = 0f;
-                RefreshBlockedPlayersInScene();
+                // Hard Block: Nuke the whole object
+                if (isBlocked && p.gameObject.activeSelf) p.gameObject.SetActive(false);
+                else if (!isBlocked && !p.gameObject.activeSelf) p.gameObject.SetActive(true);
+            }
+            else
+            {
+                // Soft Block: Hide Visuals/Audio
+                if (!p.gameObject.activeSelf) p.gameObject.SetActive(true);
+
+                // --- VISUALS FIX: Use forceRenderingOff ---
+                // This prevents the "Exploded Character" glitch because we don't mess with .enabled
+                foreach (var r in p.GetComponentsInChildren<Renderer>(true))
+                {
+                    r.forceRenderingOff = isBlocked;
+                }
+
+                // UI & Audio still need traditional disabling
+                foreach (var c in p.GetComponentsInChildren<Canvas>(true)) 
+                {
+                    c.enabled = !isBlocked;
+                }
+                
+                foreach (var a in p.GetComponentsInChildren<AudioSource>(true)) 
+                {
+                    a.volume = isBlocked ? 0f : 1f;
+                }
+                
+                // Hide non-renderer children that might persist (like particles without renderers)
+                // We skip "_" prefix to avoid breaking game systems found on the player root
+                foreach (Transform child in p.transform)
+                {
+                    if (child.name.StartsWith("_")) continue; 
+                    child.gameObject.SetActive(!isBlocked);
+                }
+            }
+
+            // 2. Global Name Logic
+            if (!isBlocked)
+            {
+                Transform globalNameObj = FindChildRecursive(p.transform, TARGET_GLOBAL_OBJ_NAME);
+                if (globalNameObj != null)
+                {
+                    bool shouldBeActive = !isGlobalHidden;
+                    if (globalNameObj.gameObject.activeSelf != shouldBeActive)
+                    {
+                        globalNameObj.gameObject.SetActive(shouldBeActive);
+                    }
+                }
             }
         }
 
-        // ────────────────────────────────────────────────
-        //  Commands
-        // ────────────────────────────────────────────────
+        private Transform FindChildRecursive(Transform parent, string name)
+        {
+            foreach (Transform child in parent)
+            {
+                if (child.name.Equals(name)) return child;
+                Transform found = FindChildRecursive(child, name);
+                if (found != null) return found;
+            }
+            return null;
+        }
+
+        public void ForceRefreshAll()
+        {
+            foreach (var p in FindObjectsOfType<Player>()) { if (p == null || p.isLocalPlayer) continue; ProcessPlayer(p); }
+        }
+
+        private void RefreshBlockedPlayersInScene() => ForceRefreshAll();
+        public void AddBlock(ulong steamID, string name = null) { if (BlockedSteamIDs.Add(steamID)) { SaveBlockList(); ForceRefreshAll(); PModerationAPI.NotifyBlocked(steamID); } }
+        public void RemoveBlock(ulong steamID) { if (BlockedSteamIDs.Remove(steamID)) { SaveBlockList(); ForceRefreshAll(); PModerationAPI.NotifyUnblocked(steamID); } }
+        public bool IsBlocked(ulong steamID) => BlockedSteamIDs.Contains(steamID);
+        public bool IsGlobalNameHidden(ulong steamID) => HiddenGlobalNameIDs.Contains(steamID);
+        public void HideGlobalName(ulong steamID) { if (HiddenGlobalNameIDs.Add(steamID)) { SaveGlobalNameList(); ForceRefreshAll(); } }
+        public void UnhideGlobalName(ulong steamID) { if (HiddenGlobalNameIDs.Remove(steamID)) { SaveGlobalNameList(); ForceRefreshAll(); } }
+
+        private void LoadBlockList() { if (!File.Exists(blockListPath)) return; try { var l = JsonConvert.DeserializeObject<List<ulong>>(File.ReadAllText(blockListPath)); if (l != null) BlockedSteamIDs = new HashSet<ulong>(l); } catch { } }
+        private void SaveBlockList() { File.WriteAllText(blockListPath, JsonConvert.SerializeObject(BlockedSteamIDs.ToList(), Formatting.Indented)); }
+        private void LoadGlobalNameList() { if (!File.Exists(globalNameListPath)) return; try { var l = JsonConvert.DeserializeObject<List<ulong>>(File.ReadAllText(globalNameListPath)); if (l != null) HiddenGlobalNameIDs = new HashSet<ulong>(l); } catch { } }
+        private void SaveGlobalNameList() { File.WriteAllText(globalNameListPath, JsonConvert.SerializeObject(HiddenGlobalNameIDs.ToList(), Formatting.Indented)); }
+
+        private void InitConfig()
+        {
+            CfgEnabled = Config.Bind("1. General", "Enabled", true, "Master switch");
+            CfgHardBlock = Config.Bind("2. Blocking", "Hard Block", false, "True = Disables GameObject. False = Hides Visuals.");
+            CfgCensorChat = Config.Bind("3. Chat", "Censor Chat", true, "Replace blocked players' chat.");
+            CfgCensorReplacement = Config.Bind("3. Chat", "Replacement Text", "[BLOCKED]", "Text to show.");
+            CfgDebugMode = Config.Bind("4. Advanced", "Debug Mode", false, "Log details.");
+        }
+
+        private void AddSettings()
+        {
+            var tab = Settings.GetOrAddCustomTab(ModInfo.NAME);
+            tab.AddHeader("General"); tab.AddToggle(CfgEnabled);
+            tab.AddHeader("Blocking"); tab.AddToggle(CfgHardBlock);
+            tab.AddHeader("Chat"); tab.AddToggle(CfgCensorChat); tab.AddTextField(CfgCensorReplacement);
+            tab.AddHeader("Advanced"); tab.AddToggle(CfgDebugMode);
+        }
+
         private void RegisterModCommands()
         {
             var client = new CommandOptions { chatCommand = ChatCommandType.ClientSide };
 
+            // Existing commands (block, unblock, blocklist, export, import)
             RegisterCommand("block", "Locally hides a player's visuals (and optionally chat).", (c, a) =>
             {
                 if (a.Length == 0) return false;
@@ -96,7 +197,6 @@ namespace PModeration
                 {
                     NotifyCaller(c, $"<color=yellow>[Block]</color> Player '{name}' not found.", Color.white);
                 }
-
                 return true;
             }, client);
 
@@ -122,10 +222,8 @@ namespace PModeration
                 }
                 else
                 {
-                    NotifyCaller(c, $"<color=yellow>[Unblock]</color> Player not found. Use SteamID if hidden.",
-                        Color.white);
+                    NotifyCaller(c, $"<color=yellow>[Unblock]</color> Player not found. Use SteamID if hidden.", Color.white);
                 }
-
                 return true;
             }, client);
 
@@ -153,7 +251,6 @@ namespace PModeration
                     NotifyCaller(c, $"<color=red>[Import]</color> File not found: {path}", Color.white);
                     return true;
                 }
-
                 var json = File.ReadAllText(path);
                 var list = JsonConvert.DeserializeObject<List<ulong>>(json);
                 BlockedSteamIDs.UnionWith(list);
@@ -162,277 +259,88 @@ namespace PModeration
                 NotifyCaller(c, $"<color=green>[Import]</color> Imported {list.Count} IDs.", Color.white);
                 return true;
             }, client);
-            
-            RegisterCommand("blockhelp", "Lists all PModeration commands.", (c, _) =>
-            {
-                NotifyCaller(c, "<color=red>PModeration Commands:</color>", Color.white);
-                NotifyCaller(c, "<color=white>/block <name></color> — Locally hides a player by name.", Color.white);
-                NotifyCaller(c, "<color=white>/unblock <name|steamID></color> — Unhides a player by name or SteamID.", Color.white);
-                NotifyCaller(c, "<color=white>/blocklist</color> — Shows all currently blocked SteamIDs.", Color.white);
-                NotifyCaller(c, "<color=white>/blockexport [path]</color> — Exports blocklist to a JSON file.", Color.white);
-                NotifyCaller(c, "<color=white>/blockimport <path></color> — Imports blocklist from a JSON file.", Color.white);
-                NotifyCaller(c, "<color=gray>Tip:</color> Use SteamID with /unblock if the player is hidden.", Color.white);
-                return true;
-            }, client);
-        }
 
-        // ────────────────────────────────────────────────
-        //  Core Logic
-        // ────────────────────────────────────────────────
-        private void ProcessPlayer(Player p)
+            RegisterCommand("hideglobal", "Hides only a player's @global name (does not hide model or RP title).", (c, a) =>
+    {
+        if (a.Length == 0) return false;
+        string name = string.Join(" ", a);
+        var target = FindPlayerByName(name);
+        if (target != null && ulong.TryParse(target._steamID, out ulong id))
         {
-            if (p == null || p.isLocalPlayer) return;
-            if (!ulong.TryParse(p._steamID, out ulong sID)) return;
-
-            bool shouldBlock = BlockedSteamIDs.Contains(sID) && CfgEnabled.Value;
-
-            if (CfgHardBlock.Value)
-            {
-                // Hard: disable entire GameObject (includes network components)
-                if (shouldBlock && p.gameObject.activeSelf)
-                {
-                    if (CfgDebugMode.Value) Log.LogInfo($"Hard-blocking {p._nickname} ({sID})");
-                    p.gameObject.SetActive(false);
-                }
-                else if (!shouldBlock && !p.gameObject.activeSelf)
-                {
-                    if (CfgDebugMode.Value) Log.LogInfo($"Restoring {p._nickname} ({sID})");
-                    p.gameObject.SetActive(true);
-                }
-            }
-            else
-            {
-                // Soft: keep root active, toggle all direct children
-                if (!p.gameObject.activeSelf) p.gameObject.SetActive(true);
-
-                foreach (Transform child in p.transform)
-                    child.gameObject.SetActive(!shouldBlock);
-
-                // Always keep audio at correct volume regardless
-                foreach (var a in p.GetComponentsInChildren<AudioSource>(true))
-                    a.volume = shouldBlock ? 0f : 1f;
-            }
+            HideGlobalName(id);
+            NotifyCaller(c, $"<color=cyan>[HideGlobal]</color> Hid @global name for {target._nickname}.", Color.white);
         }
-
-        public void ForceRefreshAll()
+        else
         {
-            foreach (var p in Resources.FindObjectsOfTypeAll<Player>())
-            {
-                if (p == null || !p.gameObject.scene.IsValid() || p.isLocalPlayer) continue;
-                ProcessPlayer(p);
-            }
+            NotifyCaller(c, $"<color=yellow>[HideGlobal]</color> Player '{name}' not found.", Color.white);
         }
+        return true;
+    }, client);
 
-        private void RefreshBlockedPlayersInScene() => ForceRefreshAll();
+    RegisterCommand("unhideglobal", "Unhides a player's @global name.", (c, a) =>
+    {
+        if (a.Length == 0) return false;
+        string input = string.Join(" ", a);
 
-        // ────────────────────────────────────────────────
-        //  Block Management
-        // ────────────────────────────────────────────────
-        public void AddBlock(ulong steamID, string name = null)
+        if (ulong.TryParse(input, out ulong id))
         {
-            if (BlockedSteamIDs.Add(steamID))
-            {
-                SaveBlockList();
-                ForceRefreshAll();
-                PModerationAPI.NotifyBlocked(steamID);
-                if (CfgDebugMode.Value) Log.LogInfo($"Blocked {name ?? "unknown"} ({steamID})");
-            }
+            UnhideGlobalName(id);
+            ForceRefreshAll();
+            NotifyCaller(c, $"<color=green>[UnhideGlobal]</color> Unhid @global name for ID {id}.", Color.white);
+            return true;
         }
 
-        public void RemoveBlock(ulong steamID)
+        var target = FindPlayerByName(input);
+        if (target != null && ulong.TryParse(target._steamID, out ulong sid))
         {
-            if (BlockedSteamIDs.Remove(steamID))
-            {
-                SaveBlockList();
-                ForceRefreshAll();
-                PModerationAPI.NotifyUnblocked(steamID);
-                if (CfgDebugMode.Value) Log.LogInfo($"Unblocked {steamID}");
-            }
+            UnhideGlobalName(sid);
+            ForceRefreshAll();
+            NotifyCaller(c, $"<color=green>[UnhideGlobal]</color> Unhid @global name for {target._nickname}.", Color.white);
         }
-
-        public bool IsBlocked(ulong steamID) => BlockedSteamIDs.Contains(steamID);
-
-        // ────────────────────────────────────────────────
-        //  Helpers
-        // ────────────────────────────────────────────────
-        private static Player FindPlayerByName(string name)
+        else
         {
-            var players = Resources.FindObjectsOfTypeAll<Player>()
-                .Where(p => p != null && p.gameObject.scene.IsValid() && !p.isLocalPlayer);
-
-            var exact =
-                players.FirstOrDefault(p => string.Equals(p._nickname, name, StringComparison.OrdinalIgnoreCase));
-            if (exact != null) return exact;
-
-            return players.FirstOrDefault(p => p._nickname.IndexOf(name, StringComparison.OrdinalIgnoreCase) >= 0);
+            NotifyCaller(c, $"<color=yellow>[UnhideGlobal]</color> Player not found. Use SteamID if hidden.", Color.white);
         }
+        return true;
+    }, client);
+    RegisterCommand("blockhelp", "Shows all PModeration commands and tips.", (c, _) =>
+    {
+        NotifyCaller(c, "<color=#ff8800>=== PModeration Commands (all client-side) ===</color>", Color.white);
 
-        // ────────────────────────────────────────────────
-        //  Persistence
-        // ────────────────────────────────────────────────
-        private void LoadBlockList()
-        {
-            if (!File.Exists(blockListPath)) return;
+        NotifyCaller(c, "<color=white>/block <name></color> — Hide player (model, nameplate, audio)", Color.white);
+        NotifyCaller(c, "<color=white>/unblock <name or SteamID></color> — Unhide player", Color.white);
 
-            try
-            {
-                var json = File.ReadAllText(blockListPath);
-                var list = JsonConvert.DeserializeObject<List<ulong>>(json);
-                BlockedSteamIDs = new HashSet<ulong>(list ?? new List<ulong>());
-                Log.LogInfo($"Loaded {BlockedSteamIDs.Count} blocked IDs.");
-            }
-            catch (Exception e)
-            {
-                Log.LogError($"Failed to load blocklist: {e.Message}");
-            }
-        }
+        NotifyCaller(c, "<color=cyan>/hideglobal <name></color> — Hide only @global name (RP title stays)", Color.white);
+        NotifyCaller(c, "<color=cyan>/unhideglobal <name or SteamID></color> — Unhide @global name", Color.white);
 
-        private void SaveBlockList()
-        {
-            try
-            {
-                var json = JsonConvert.SerializeObject(BlockedSteamIDs.ToList(), Formatting.Indented);
-                File.WriteAllText(blockListPath, json);
-            }
-            catch (Exception e)
-            {
-                Log.LogError($"Failed to save blocklist: {e.Message}");
-            }
-        }
+        NotifyCaller(c, "<color=white>/blocklist</color> — List all blocked SteamIDs", Color.white);
+        NotifyCaller(c, "<color=white>/blockexport [optional path]</color> — Save blocklist to JSON", Color.white);
+        NotifyCaller(c, "<color=white>/blockimport <path></color> — Load blocklist from JSON", Color.white);
 
-        // ────────────────────────────────────────────────
-        //  Config & UI
-        // ────────────────────────────────────────────────
-        private void InitConfig()
-        {
-            CfgEnabled = Config.Bind("1. General", "Enabled", true, "Master switch");
-            CfgHardBlock = Config.Bind("2. Blocking", "Hard Block (Advanced)", false,
-                "True = disables entire player GameObject (thorough but riskier for party sync).\nFalse = soft block (only visuals/UI/audio – recommended default, safer)");
-            CfgCensorChat = Config.Bind("3. Chat Censor", "Censor Chat", false,
-                "Replace blocked players' chat with replacement text (optional – Atlyss mute already exists)");
-            CfgCensorReplacement = Config.Bind("3. Chat Censor", "Replacement Text", "[BLOCKED]",
-                "Text shown instead of blocked messages");
-            CfgDebugMode = Config.Bind("4. Advanced", "Debug Mode", false, "Log detailed blocking actions");
-        }
+        NotifyCaller(c, "<color=gray>Tip: Use SteamID with /unblock or /unhideglobal if the player is hidden and name not visible.</color>", Color.gray);
+        NotifyCaller(c, "<color=gray>Config: Edit BepInEx/config/PModeration.cfg or use Mod Settings menu.</color>", Color.gray);
 
-        private void AddSettings()
-        {
-            var tab = Settings.GetOrAddCustomTab(ModInfo.NAME);
-            tab.AddHeader("General");
-            tab.AddToggle(CfgEnabled);
-            tab.AddHeader("Blocking");
-            tab.AddToggle(CfgHardBlock);
-            tab.AddHeader("Chat Filtering (optional)");
-            tab.AddToggle(CfgCensorChat);
-            tab.AddTextField(CfgCensorReplacement);
-            tab.AddHeader("Advanced");
-            tab.AddToggle(CfgDebugMode);
-        }
+        return true;
+    }, client);
+}
+
+        private static Player FindPlayerByName(string name) => FindObjectsOfType<Player>().FirstOrDefault(p => !p.isLocalPlayer && p._nickname.IndexOf(name, StringComparison.OrdinalIgnoreCase) >= 0);
     }
 
-    // ────────────────────────────────────────────────
-    //  PUBLIC API for other mods
-    // ────────────────────────────────────────────────
     public static class PModerationAPI
     {
-        /// <summary>
-        /// Returns true if the given SteamID is blocked by the local player.
-        /// </summary>
-        public static bool IsPlayerBlocked(ulong steamID)
-        {
-            return Plugin.Instance.IsBlocked(steamID);
-        }
-
-        /// <summary>
-        /// Adds a SteamID to the local block list and refreshes visuals.
-        /// </summary>
-        public static void BlockPlayer(ulong steamID)
-        {
-            Plugin.Instance.AddBlock(steamID);
-        }
-
-        /// <summary>
-        /// Removes a SteamID from the local block list and refreshes visuals.
-        /// </summary>
-        public static void UnblockPlayer(ulong steamID)
-        {
-            Plugin.Instance.RemoveBlock(steamID);
-        }
-
-        /// <summary>
-        /// Gets a read-only snapshot of currently blocked SteamIDs.
-        /// </summary>
-        public static IReadOnlyCollection<ulong> GetBlockedSteamIDs()
-        {
-            return Plugin.BlockedSteamIDs.ToList().AsReadOnly();
-        }
-
-        /// <summary>
-        /// Event fired when a player is blocked (local only).
-        /// </summary>
+        public static bool IsPlayerBlocked(ulong steamID) => Plugin.Instance.IsBlocked(steamID);
+        public static void BlockPlayer(ulong steamID) => Plugin.Instance.AddBlock(steamID);
+        public static void UnblockPlayer(ulong steamID) => Plugin.Instance.RemoveBlock(steamID);
         public static event Action<ulong> OnPlayerBlocked;
-
-        /// <summary>
-        /// Event fired when a player is unblocked (local only).
-        /// </summary>
         public static event Action<ulong> OnPlayerUnblocked;
-
-        // Internal helpers to fire events
         internal static void NotifyBlocked(ulong id) => OnPlayerBlocked?.Invoke(id);
         internal static void NotifyUnblocked(ulong id) => OnPlayerUnblocked?.Invoke(id);
     }
-    
-    // ────────────────────────────────────────────────
-    //  Harmony Patch – Chat Censor (optional)
-    // ────────────────────────────────────────────────
+
     [HarmonyPatch(typeof(ChatBehaviour), "UserCode_Rpc_RecieveChatMessage__String__Boolean__ChatChannel")]
-    public static class ChatReceivePatch
-    {
-        static bool Prefix(ChatBehaviour __instance, ref string message, bool _isEmoteMessage, ChatBehaviour.ChatChannel _chatChannel)
-        {
-            if (!Plugin.CfgEnabled.Value || !Plugin.CfgCensorChat.Value)
-                return true;
-
-            // Attempt to get sender safely without assuming field name
-            Player sender = null;
-
-            // If you know a reliable public property or method exists on ChatBehaviour,
-            // use it here instead (preferred for future-proofing):
-            // sender = __instance.Sender;  // ← example – replace with actual if exists
-
-            // Fallback: try common private field names via reflection (only if needed)
-            if (sender == null)
-            {
-                var possibleFields = new[] { "_player", "player", "m_Player", "_sender", "_owner" };
-                foreach (var fieldName in possibleFields)
-                {
-                    var field = typeof(ChatBehaviour).GetField(fieldName, System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
-                    if (field != null)
-                    {
-                        sender = field.GetValue(__instance) as Player;
-                        if (sender != null) break;
-                    }
-                }
-            }
-
-            if (sender == null)
-            {
-                if (Plugin.CfgDebugMode.Value)
-                    Plugin.Log.LogWarning("Chat censor: Could not find sender Player instance.");
-                return true;
-            }
-
-            if (!ulong.TryParse(sender._steamID, out ulong sID))
-                return true;
-
-            if (Plugin.Instance.IsBlocked(sID))
-            {
-                message = Plugin.CfgCensorReplacement.Value;
-                if (Plugin.CfgDebugMode.Value)
-                    Plugin.Log.LogInfo($"Censored chat message from blocked player {sender._nickname} ({sID})");
-            }
-
-            return true;
-        }
-    }
+    public static class ChatReceivePatch { static bool Prefix(ChatBehaviour __instance, ref string message) {
+        if (!Plugin.CfgEnabled.Value || !Plugin.CfgCensorChat.Value) return true;
+        try { var f = typeof(ChatBehaviour).GetField("_player", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+            if(f!=null) { var s = f.GetValue(__instance) as Player; if(s!=null && ulong.TryParse(s._steamID, out ulong id) && Plugin.Instance.IsBlocked(id)) message = Plugin.CfgCensorReplacement.Value; } } catch {} return true; } }
 }

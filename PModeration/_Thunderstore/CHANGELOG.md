@@ -2,7 +2,38 @@
 
 All notable changes to PModeration will be documented here.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),  
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [1.1.0] - 2026-02-22
+
+### Added
+- New feature: **Hide only @global name** (`_text_playerGlobalName`) without hiding the full player model, RP title, location, or audio
+    - Separate UI button in who-list entries (next to main Block button)
+    - Dedicated commands: `/hideglobal <name>` and `/unhideglobal <name-or-ID>`
+    - Persistent per SteamID (saved to `PModeration_GlobalNameHides.json`)
+    - Works independently of full blocking (can hide @name on visible players)
+
+- Enhanced UI button injection:
+    - More robust reference button detection (multiple paths + fallback to any Button/Image)
+    - Reduced console spam (warnings only once per entry type)
+    - Delayed injection timing (WaitForEndOfFrame) for better UI stability
+
+- New help command: `/blockhelp` — displays all commands with descriptions and tips in a clean, colored list
+
+- Public API extensions: `HideGlobalName`, `UnhideGlobalName`, `IsGlobalNameHidden`
+
+### Changed
+- Reordered and clarified `/blockhelp` output for better in-game usability
+
+### Fixed
+- Global name hide logic now survives soft-block restore loops (applied **after** children `SetActive(true)`)
+- Hard-block restore path correctly re-applies @name hide state
+- Button icon logic corrected (shows "show" icon when name is hidden, "hide" when visible)
+
+### Notes
+- UI buttons now appear more reliably in who-list entries
+- All changes remain purely client-side — no server/host impact
 
 ## [1.0.0] - 2026-02-19
 

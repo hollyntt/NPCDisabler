@@ -7,7 +7,7 @@
   "targets": {
     ".NETStandard,Version=v2.1": {},
     ".NETStandard,Version=v2.1/": {
-      "PModeration/1.0.0": {
+      "PModeration/1.1.0": {
         "dependencies": {
           "BepInEx.Analyzers": "1.0.8",
           "BepInEx.AssemblyPublicizer.MSBuild": "0.4.2",
@@ -676,7 +676,7 @@
     }
   },
   "libraries": {
-    "PModeration/1.0.0": {
+    "PModeration/1.1.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

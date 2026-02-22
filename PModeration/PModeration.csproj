@@ -3,7 +3,7 @@
     <PropertyGroup>
         <Authors>com.PModeration.sftwre</Authors>
         <Product>Player Moderation</Product>
-        <Version>1.0.0</Version>
+        <Version>1.1.0</Version>
         <PackageId>Player Moderation</PackageId>
     </PropertyGroup>
 
@@ -61,5 +61,9 @@
       <EmbeddedResource Include="icons\block.png" />
       <None Remove="icons\unblock.png" />
       <EmbeddedResource Include="icons\unblock.png" />
+      <None Remove="icons\globalhide.png" />
+      <EmbeddedResource Include="icons\globalhide.png" />
+      <None Remove="icons\globalshow.png" />
+      <EmbeddedResource Include="icons\globalshow.png" />
     </ItemGroup>
 </Project>
