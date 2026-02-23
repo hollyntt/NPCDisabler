@@ -75,15 +75,16 @@ namespace PModeration
             Transform header = FindChildRecursive(entryObj.transform, HEADER_NAME);
             if (header == null) return;
 
-            // --- LAYOUT FIX: Fix overlapping text ---
-            ApplyLayoutConstraint(header, CHAR_TEXT_NAME, 80f);
-            ApplyLayoutConstraint(header, GLOBAL_TEXT_NAME, 70f);
+            // --- LAYOUT FIX ---
+            ApplyLayoutConstraint(header, CHAR_TEXT_NAME, 65f);
+            ApplyLayoutConstraint(header, GLOBAL_TEXT_NAME, 55f);
 
-            // Shift Header Left slightly to make room (x = -15 as requested)
+            // Widen header to fit our two extra buttons
             RectTransform headerRect = header.GetComponent<RectTransform>();
-            if (headerRect != null && headerRect.anchoredPosition.x > -10)
+            if (headerRect != null && headerRect.sizeDelta.x < 400f)
             {
-                headerRect.anchoredPosition = new Vector2(-15f, headerRect.anchoredPosition.y);
+                headerRect.sizeDelta = new Vector2(headerRect.sizeDelta.x + 40f, headerRect.sizeDelta.y);
+                headerRect.localScale = new Vector3(0.9f, 1f, 1f);
             }
             // ----------------------------------------
 
