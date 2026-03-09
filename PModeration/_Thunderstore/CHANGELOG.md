@@ -5,6 +5,23 @@ All notable changes to PModeration will be documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),  
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.4] - 2026-03-09
+
+### Fixed
+- Weird bug that was found.. i dont know it has nothing to do with PModeration fully lol.
+
+# ChatColors 
+im looking at you but its not of you issue at all.
+
+# DiceAndColor.. 
+your CROLL patch needs a 1-line fix pls apply this when u see this
+
+- "text3 == "/croll" after splitting on space and lowercasing array[0]. When ChatColors wraps it first, array[0] becomes <color=#HEX>/croll</color> so the comparison fails completely."
+
+heres ur fix, strip yo thang b4 applying thx.
+
+```string text3 = Regex.Replace(text2, "<.*?>", "");```
+
 ## [1.1.3] - 2026-03-08
 
 ### Fixed
