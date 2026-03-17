@@ -270,68 +270,68 @@ namespace PModeration
             }, client);
 
             RegisterCommand("hideglobal", "Hides only a player's @global name (does not hide model or RP title).", (c, a) =>
-    {
-        if (a.Length == 0) return false;
-        string name = string.Join(" ", a);
-        var target = FindPlayerByName(name);
-        if (target != null && ulong.TryParse(target._steamID, out ulong id))
-        {
-            HideGlobalName(id);
-            NotifyCaller(c, $"<color=cyan>[HideGlobal]</color> Hid @global name for {target._nickname}.", Color.white);
+            {
+                if (a.Length == 0) return false;
+                string name = string.Join(" ", a);
+                var target = FindPlayerByName(name);
+                if (target != null && ulong.TryParse(target._steamID, out ulong id))
+                {
+                    HideGlobalName(id);
+                    NotifyCaller(c, $"<color=cyan>[HideGlobal]</color> Hid @global name for {target._nickname}.", Color.white);
+                }
+                else
+                {
+                    NotifyCaller(c, $"<color=yellow>[HideGlobal]</color> Player '{name}' not found.", Color.white);
+                }
+                return true;
+            }, client);
+
+            RegisterCommand("unhideglobal", "Unhides a player's @global name.", (c, a) =>
+            {
+                if (a.Length == 0) return false;
+                string input = string.Join(" ", a);
+
+                if (ulong.TryParse(input, out ulong id))
+                {
+                    UnhideGlobalName(id);
+                    ForceRefreshAll();
+                    NotifyCaller(c, $"<color=green>[UnhideGlobal]</color> Unhid @global name for ID {id}.", Color.white);
+                    return true;
+                }
+
+                var target = FindPlayerByName(input);
+                if (target != null && ulong.TryParse(target._steamID, out ulong sid))
+                {
+                    UnhideGlobalName(sid);
+                    ForceRefreshAll();
+                    NotifyCaller(c, $"<color=green>[UnhideGlobal]</color> Unhid @global name for {target._nickname}.", Color.white);
+                }
+                else
+                {
+                    NotifyCaller(c, $"<color=yellow>[UnhideGlobal]</color> Player not found. Use SteamID if hidden.", Color.white);
+                }
+                return true;
+            }, client);
+            RegisterCommand("blockhelp", "Shows all PModeration commands and tips.", (c, _) =>
+            {
+                NotifyCaller(c, "<color=#ff8800>=== PModeration Commands (all client-side) ===</color>", Color.white);
+
+                NotifyCaller(c, "<color=white>/block <name></color> — Hide player (model, nameplate, audio)", Color.white);
+                NotifyCaller(c, "<color=white>/unblock <name or SteamID></color> — Unhide player", Color.white);
+
+                NotifyCaller(c, "<color=cyan>/hideglobal <name></color> — Hide only @global name (RP title stays)", Color.white);
+                NotifyCaller(c, "<color=cyan>/unhideglobal <name or SteamID></color> — Unhide @global name", Color.white);
+
+                NotifyCaller(c, "<color=white>/blocklist</color> — List all blocked SteamIDs", Color.white);
+                NotifyCaller(c, "<color=white>/blockexport [optional path]</color> — Save blocklist to JSON", Color.white);
+                NotifyCaller(c, "<color=white>/blockimport <path></color> — Load blocklist from JSON", Color.white);
+
+                NotifyCaller(c, "<color=gray>Tip: Use SteamID with /unblock or /unhideglobal if the player is hidden and name not visible.</color>", Color.gray);
+                NotifyCaller(c, "<color=gray>Config: Edit BepInEx/config/PModeration.cfg or use Mod Settings menu.</color>", Color.gray);
+
+                return true;
+            }, client);
         }
-        else
-        {
-            NotifyCaller(c, $"<color=yellow>[HideGlobal]</color> Player '{name}' not found.", Color.white);
-        }
-        return true;
-    }, client);
-
-    RegisterCommand("unhideglobal", "Unhides a player's @global name.", (c, a) =>
-    {
-        if (a.Length == 0) return false;
-        string input = string.Join(" ", a);
-
-        if (ulong.TryParse(input, out ulong id))
-        {
-            UnhideGlobalName(id);
-            ForceRefreshAll();
-            NotifyCaller(c, $"<color=green>[UnhideGlobal]</color> Unhid @global name for ID {id}.", Color.white);
-            return true;
-        }
-
-        var target = FindPlayerByName(input);
-        if (target != null && ulong.TryParse(target._steamID, out ulong sid))
-        {
-            UnhideGlobalName(sid);
-            ForceRefreshAll();
-            NotifyCaller(c, $"<color=green>[UnhideGlobal]</color> Unhid @global name for {target._nickname}.", Color.white);
-        }
-        else
-        {
-            NotifyCaller(c, $"<color=yellow>[UnhideGlobal]</color> Player not found. Use SteamID if hidden.", Color.white);
-        }
-        return true;
-    }, client);
-    RegisterCommand("blockhelp", "Shows all PModeration commands and tips.", (c, _) =>
-    {
-        NotifyCaller(c, "<color=#ff8800>=== PModeration Commands (all client-side) ===</color>", Color.white);
-
-        NotifyCaller(c, "<color=white>/block <name></color> — Hide player (model, nameplate, audio)", Color.white);
-        NotifyCaller(c, "<color=white>/unblock <name or SteamID></color> — Unhide player", Color.white);
-
-        NotifyCaller(c, "<color=cyan>/hideglobal <name></color> — Hide only @global name (RP title stays)", Color.white);
-        NotifyCaller(c, "<color=cyan>/unhideglobal <name or SteamID></color> — Unhide @global name", Color.white);
-
-        NotifyCaller(c, "<color=white>/blocklist</color> — List all blocked SteamIDs", Color.white);
-        NotifyCaller(c, "<color=white>/blockexport [optional path]</color> — Save blocklist to JSON", Color.white);
-        NotifyCaller(c, "<color=white>/blockimport <path></color> — Load blocklist from JSON", Color.white);
-
-        NotifyCaller(c, "<color=gray>Tip: Use SteamID with /unblock or /unhideglobal if the player is hidden and name not visible.</color>", Color.gray);
-        NotifyCaller(c, "<color=gray>Config: Edit BepInEx/config/PModeration.cfg or use Mod Settings menu.</color>", Color.gray);
-
-        return true;
-    }, client);
-}
 
         private static Player FindPlayerByName(string name) => FindObjectsOfType<Player>().FirstOrDefault(p => !p.isLocalPlayer && p._nickname.IndexOf(name, StringComparison.OrdinalIgnoreCase) >= 0);
     }

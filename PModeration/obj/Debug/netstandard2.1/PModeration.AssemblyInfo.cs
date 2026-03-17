@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("com.PModeration.sftwre")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.1.4.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.1.4+99d511b41b553fe17cb66d918a089921a86b0b29")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.1.4+dbb03ac445e73996bcb6127c90d872db801e2930")]
 [assembly: System.Reflection.AssemblyProductAttribute("Player Moderation")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PModeration")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.1.4.0")]
