@@ -6,6 +6,6 @@ namespace PModeration
     {
         public const string GUID = "com.PModeration.sftwre";
         public const string NAME = "PModeration";
-        public const string VERSION = "1.1.4";
+        public const string VERSION = "1.1.5";
     }
 }

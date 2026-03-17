@@ -3,7 +3,7 @@
     <PropertyGroup>
         <Authors>com.PModeration.sftwre</Authors>
         <Product>Player Moderation</Product>
-        <Version>1.1.4</Version>
+        <Version>1.1.5</Version>
         <PackageId>Player Moderation</PackageId>
     </PropertyGroup>
 
