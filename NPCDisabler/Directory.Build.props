@@ -11,17 +11,17 @@
         <CreateThunderstorePackage>true</CreateThunderstorePackage>
         <ThunderstorePackageName>NPCDisabler</ThunderstorePackageName>
         <ThunderstoreTeamName>s0apy</ThunderstoreTeamName>
-        <ThunderstorePackageDescription>Get Personal, The block button is enough!</ThunderstorePackageDescription>
+        <ThunderstorePackageDescription>Client-side NetNPC hider for ATLYSS.</ThunderstorePackageDescription>
         <ThunderstoreWebsite>https://discord.gg/ePhX4Fb2we</ThunderstoreWebsite>
     </PropertyGroup>
     <ItemGroup>
         <!-- Thunderstore dependency strings -->
         <ThunderstoreDependency Include="BepInEx-BepInExPack-5.4.2100" Visible="false" />
-        <ThunderstoreDependency Include="Nessie-EasySettings-1.1.8" Visible="false" />
+        <ThunderstoreDependency Include="Nessie-EasySettings-1.3.0" Visible="false" />
         <ThunderstoreDependency Include="Soggy_Pancake-CodeYapper-2.2.2" Visible="false"/>
         
         <!-- Output items to include from build assemblies -->
-        <ThunderstoreAssemblyInclude Include="$(AssemblyName).dll" Visible="false" />
+        <!--<ThunderstoreAssemblyInclude Include="$(AssemblyName).dll" Visible="false" />-->
         <!--<ThunderstoreAssemblyInclude Include="UnityEngine.UIModule.dll" Visible="false" />-->
     </ItemGroup>
 </Project>
