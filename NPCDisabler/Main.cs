@@ -288,6 +288,9 @@ namespace NPCDisabler
 
             foreach (var animator in npcGo.GetComponentsInChildren<Animator>(true))
                 animator.enabled = !hide;
+            
+            foreach (var collider in npcGo.GetComponentsInChildren<Collider>(true))
+                collider.enabled = !hide;
         }
 
         private void ReapplyHiddenState()
