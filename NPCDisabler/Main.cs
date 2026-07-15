@@ -59,7 +59,6 @@ namespace NPCDisabler
         {
             Scene newTargetScene = GetCurrentMapScene();
 
-            // Only rescan if the target map scene has actually changed
             if (newTargetScene != _currentTargetScene)
             {
                 _currentTargetScene = newTargetScene;
@@ -77,7 +76,6 @@ namespace NPCDisabler
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
-            // Trigger a scene re-evaluation when a new scene loads
             _currentTargetScene = default;
         }
 
@@ -91,10 +89,6 @@ namespace NPCDisabler
         {
             _settingsInitialized = true;
 
-            // GetOrAddCustomTab is called exactly once, here. It's idempotent
-            // (returns the existing tab by name if one's already registered), but
-            // there's no reason to keep re-querying it - cache the reference and
-            // reuse it everywhere else (see ScanForNetNPCs).
             if (_modTab == null)
                 _modTab = Settings.GetOrAddCustomTab(ModInfo.NAME);
 
@@ -130,19 +124,8 @@ namespace NPCDisabler
             Log.LogInfo($"[{ModInfo.NAME}] Settings applied and saved.");
         }
 
-        /// <summary>
-        /// Reliably determines the actual map scene to scan. Uses the player's
-        /// server-assigned MapInstance (Network_playerMapInstance) as the source of
-        /// truth, since multiple instances of the same map can be loaded
-        /// simultaneously on a host - a first-match FindObjectsOfType scan over all
-        /// loaded MapInstances can't tell which one the local player is actually in.
-        /// </summary>
         private Scene GetCurrentMapScene()
         {
-            // Priority 1: the instance the game itself has assigned this player to.
-            // MapInstance.Handle_IteratePopulationList sets this every frame for every
-            // peer, so it's authoritative even when several instances of the same map
-            // are loaded at once.
             if (Player._mainPlayer != null && Player._mainPlayer.Network_playerMapInstance != null)
             {
                 Scene assignedScene = Player._mainPlayer.Network_playerMapInstance.gameObject.scene;
@@ -150,8 +133,6 @@ namespace NPCDisabler
                     return assignedScene;
             }
 
-            // Priority 2: fallback to the player's own scene (e.g. main menu, or
-            // before a MapInstance has assigned itself yet).
             if (Player._mainPlayer != null)
             {
                 Scene playerScene = Player._mainPlayer.gameObject.scene;
@@ -159,7 +140,6 @@ namespace NPCDisabler
                     return playerScene;
             }
 
-            // Priority 3: ultimate fallback to the currently active scene.
             return SceneManager.GetActiveScene();
         }
 
@@ -168,46 +148,54 @@ namespace NPCDisabler
             Scene targetScene = GetCurrentMapScene();
             if (!targetScene.isLoaded) return;
 
-            // --- TEMP DIAGNOSTIC LOGGING ---
-            // Scene names aren't unique on additive loads, so two different loaded
-            // scenes can both display as "_zone00_sanctum" while being distinct
-            // Scene structs. .handle IS unique per loaded scene instance, so that's
-            // what actually proves a match or mismatch. This logs enough to compare
-            // player scene vs assigned MapInstance scene vs where NetNPCs actually
-            // live - remove once the scoping is confirmed correct.
+            MapInstance targetInstance = Player._mainPlayer != null
+                ? Player._mainPlayer.Network_playerMapInstance
+                : null;
+
+            string playerSceneInfo = "null";
+            string assignedInstanceInfo = "null";
+            if (Player._mainPlayer != null)
             {
-                string playerSceneInfo = "null";
-                string assignedInstanceInfo = "null";
-                if (Player._mainPlayer != null)
+                Scene ps = Player._mainPlayer.gameObject.scene;
+                playerSceneInfo = $"{ps.name} (handle={ps.handle})";
+
+                if (targetInstance != null)
                 {
-                    Scene ps = Player._mainPlayer.gameObject.scene;
-                    playerSceneInfo = $"{ps.name} (handle={ps.handle})";
-
-                    if (Player._mainPlayer.Network_playerMapInstance != null)
-                    {
-                        Scene ms = Player._mainPlayer.Network_playerMapInstance.gameObject.scene;
-                        assignedInstanceInfo = $"{ms.name} (handle={ms.handle})";
-                    }
-                }
-
-                var allNetNpcsUnfiltered = FindObjectsOfType<NetNPC>(true);
-                Log.LogInfo($"[{ModInfo.NAME}][DEBUG] targetScene={targetScene.name} (handle={targetScene.handle}) | " +
-                            $"playerScene={playerSceneInfo} | assignedMapInstanceScene={assignedInstanceInfo} | " +
-                            $"totalNetNPCsInMemory={allNetNpcsUnfiltered.Length}");
-
-                foreach (var npc in allNetNpcsUnfiltered)
-                {
-                    Scene npcScene = npc.gameObject.scene;
-                    bool matches = npcScene == targetScene;
-                    Log.LogInfo($"[{ModInfo.NAME}][DEBUG]   NPC '{GetNpcIdentifier(npc)}' in scene {npcScene.name} " +
-                                $"(handle={npcScene.handle}) - {(matches ? "MATCHES target" : "does NOT match target")}");
+                    Scene ms = targetInstance.gameObject.scene;
+                    assignedInstanceInfo = $"{ms.name} (handle={ms.handle}, instanceID={targetInstance.GetInstanceID()})";
                 }
             }
-            // --- END TEMP DIAGNOSTIC LOGGING ---
 
-            // STRICTLY find NetNPCs within the target map scene
+            var allNetNpcsUnfiltered = FindObjectsOfType<NetNPC>(true);
+            Log.LogDebug($"[DEBUG] targetScene={targetScene.name} (handle={targetScene.handle}) | " +
+                        $"playerScene={playerSceneInfo} | assignedMapInstance={assignedInstanceInfo} | " +
+                        $"totalNetNPCsInMemory={allNetNpcsUnfiltered.Length}");
+
+            foreach (var npc in allNetNpcsUnfiltered)
+            {
+                Scene npcScene = npc.gameObject.scene;
+                MapInstance npcInstance = npc.GetComponentInParent<MapInstance>(true);
+                bool sceneMatches = npcScene == targetScene;
+                bool instanceMatches = npcInstance != null && targetInstance != null && npcInstance == targetInstance;
+                string npcInstanceInfo = npcInstance != null
+                    ? $"instanceID={npcInstance.GetInstanceID()}"
+                    : "NOT PARENTED under a MapInstance";
+                Log.LogDebug($"[DEBUG]   NPC '{GetNpcIdentifier(npc)}' in scene {npcScene.name} " +
+                            $"(handle={npcScene.handle}) | parentMapInstance: {npcInstanceInfo} | " +
+                            $"sceneMatch={sceneMatches} instanceMatch={instanceMatches}");
+            }
+
             var netNpcs = FindObjectsOfType<NetNPC>(true)
-                .Where(npc => npc.gameObject.scene == targetScene);
+                .Where(npc =>
+                {
+                    if (targetInstance != null)
+                    {
+                        MapInstance npcInstance = npc.GetComponentInParent<MapInstance>(true);
+                        if (npcInstance != null)
+                            return npcInstance == targetInstance;
+                    }
+                    return npc.gameObject.scene == targetScene;
+                });
 
             bool discoveredNew = false;
 
@@ -233,7 +221,6 @@ namespace NPCDisabler
                     entry.SettingChanged += (s, e) => SetNpcHidden(npcName, IsEffectivelyHidden(npcName));
                     discoveredNew = true;
 
-                    // Dynamically add newly discovered NPCs to the EasySettings tab immediately
                     if (_settingsInitialized && _modTab != null && !_npcNamesAddedToTab.Contains(npcName))
                     {
                         _modTab.AddToggle(npcName, entry);
@@ -290,17 +277,6 @@ namespace NPCDisabler
                 return;
             }
 
-            // Host-safe local hiding: keeps the NetworkBehaviour and GameObject active
-            // so server-driven logic (navigation, SyncVars) keeps running for every
-            // client, but removes local visibility.
-            //
-            // Collider is intentionally left untouched here: on a listen-server host,
-            // the collider is part of the same physics scene the server uses for
-            // interaction hit-testing. Disabling it risks removing the NPC from
-            // server-side queries entirely (e.g. dialog trigger raycasts), which would
-            // break interaction for OTHER players too - not just hide it locally.
-            // Needs a live multiplayer test (host hides NPC, second client tries to
-            // interact with it) before this is touched.
             foreach (var renderer in npcGo.GetComponentsInChildren<Renderer>(true))
                 renderer.enabled = !hide;
 
