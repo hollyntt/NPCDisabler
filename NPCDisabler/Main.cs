@@ -17,7 +17,7 @@ namespace NPCDisabler
     [BepInDependency(Plugin.EasySettingsGuid, BepInDependency.DependencyFlags.SoftDependency)]
     public class Plugin : BaseUnityPlugin
     {
-        internal const string EasySettingsGuid = "EasySettings";
+        internal const string EasySettingsGuid = "Nessie.ATLYSS.EasySettings";
 
         public static Plugin Instance;
         internal static ManualLogSource Log;
