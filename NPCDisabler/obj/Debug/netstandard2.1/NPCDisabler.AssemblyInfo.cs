@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("com.NPCDisabler.sftwre")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.2.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.2+df629bbc22b7ed46a781339ac7316c04b53e2c1f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.2+d927afce3bb6c76cdddc86acfb930dcd4080b815")]
 [assembly: System.Reflection.AssemblyProductAttribute("Player Moderation")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NPCDisabler")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.2.0")]
