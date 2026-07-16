@@ -1,6 +1,6 @@
 # Changelog
 ## v1.0.2
-- Hotfix to a bug
+- Hotfix to a bug that didnt exist but its fixed
 
 ## v1.0.1
 
