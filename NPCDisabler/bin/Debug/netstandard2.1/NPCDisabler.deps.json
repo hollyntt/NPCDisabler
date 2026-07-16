@@ -7,7 +7,7 @@
   "targets": {
     ".NETStandard,Version=v2.1": {},
     ".NETStandard,Version=v2.1/": {
-      "NPCDisabler/1.0.0": {
+      "NPCDisabler/1.0.1": {
         "dependencies": {
           "BepInEx.Analyzers": "1.0.8",
           "BepInEx.AssemblyPublicizer.MSBuild": "0.4.2",
@@ -667,7 +667,7 @@
     }
   },
   "libraries": {
-    "NPCDisabler/1.0.0": {
+    "NPCDisabler/1.0.1": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
