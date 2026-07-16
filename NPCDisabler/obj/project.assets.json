@@ -2822,8 +2822,8 @@
       "BepInEx.Analyzers >= 1.*",
       "BepInEx.AssemblyPublicizer.MSBuild >= 0.4.2",
       "BepInEx.Core >= 5.4.*",
-      "Nessie-EasySettings >= 1.3.0",
-      "Soggy_Pancake-CodeYapper >= 2.2.2",
+      "Nessie-EasySettings >= 1.3.*",
+      "Soggy_Pancake-CodeYapper >= 2.2.*",
       "UnityEngine.Modules >= 2022.3.62"
     ]
   },
@@ -2831,7 +2831,7 @@
     "C:\\Users\\Hollyn\\.nuget\\packages\\": {}
   },
   "project": {
-    "version": "1.0.0",
+    "version": "1.0.2",
     "restore": {
       "projectUniqueName": "D:\\Documents\\CODE\\Ours\\NPCDisabler\\NPCDisabler\\NPCDisabler.csproj",
       "projectName": "Player Moderation",
@@ -2889,11 +2889,11 @@
           },
           "Nessie-EasySettings": {
             "target": "Package",
-            "version": "[1.3.0, )"
+            "version": "[1.3.*, )"
           },
           "Soggy_Pancake-CodeYapper": {
             "target": "Package",
-            "version": "[2.2.2, )"
+            "version": "[2.2.*, )"
           },
           "UnityEngine.Modules": {
             "suppressParent": "All",

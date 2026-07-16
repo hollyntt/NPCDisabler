@@ -6,6 +6,6 @@ namespace NPCDisabler
     {
         public const string GUID = "com.NPCDisabler.sftwre";
         public const string NAME = "NPCDisabler";
-        public const string VERSION = "1.0.0";
+        public const string VERSION = "1.0.2";
     }
 }
