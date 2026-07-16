@@ -1,5 +1,4 @@
 ﻿using BepInEx;
-using BepInEx.Bootstrap;
 using BepInEx.Configuration;
 using BepInEx.Logging;
 using HarmonyLib;
@@ -7,33 +6,32 @@ using Nessie.ATLYSS.EasySettings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace NPCDisabler
 {
     [BepInPlugin(ModInfo.GUID, ModInfo.NAME, ModInfo.VERSION)]
-    [BepInDependency(Plugin.EasySettingsGuid)]
+    [BepInDependency("Nessie.ATLYSS.EasySettings", BepInDependency.DependencyFlags.SoftDependency)]
     public class Plugin : BaseUnityPlugin
     {
-        internal const string EasySettingsGuid = "Nessie.ATLYSS.EasySettings";
-
         public static Plugin Instance;
         internal static ManualLogSource Log;
         private readonly Harmony harmony = new Harmony(ModInfo.GUID);
 
-        internal static readonly Dictionary<string, ConfigEntry<bool>> NpcToggles = new Dictionary<string, ConfigEntry<bool>>();
-        internal static ConfigEntry<bool> DisableAllNpcs;
+        private static readonly Dictionary<string, ConfigEntry<bool>> NpcToggles = new Dictionary<string, ConfigEntry<bool>>();
+        private static ConfigEntry<bool> DisableAllNpcs;
 
         private static readonly Dictionary<string, List<GameObject>> NpcRegistry = new Dictionary<string, List<GameObject>>();
         private static readonly Dictionary<string, bool> LastAppliedHiddenState = new Dictionary<string, bool>();
 
         private float _rescanTimer;
         private const float RescanInterval = 5f;
-        internal static bool SettingsInitialized;
-        private static bool _easySettingsAvailable;
+        private bool _settingsInitialized;
+        private bool _globalToggleAdded;
+        private SettingsTab _modTab;
         private Scene _currentTargetScene;
+        private readonly HashSet<string> _npcNamesAddedToTab = new HashSet<string>();
 
         void Awake()
         {
@@ -49,10 +47,7 @@ namespace NPCDisabler
             Log.LogInfo($"{ModInfo.NAME} v{ModInfo.VERSION} Loaded.");
 
             SceneManager.sceneLoaded += OnSceneLoaded;
-
-            _easySettingsAvailable = Chainloader.PluginInfos.ContainsKey(EasySettingsGuid);
-            if (_easySettingsAvailable)
-                EasySettingsIntegration.Init();
+            InitEasySettingsSafe();
         }
 
         void OnDestroy()
@@ -82,6 +77,51 @@ namespace NPCDisabler
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
             _currentTargetScene = default;
+        }
+
+        private void InitEasySettingsSafe()
+        {
+            Settings.OnInitialized.AddListener(OnSettingsInitialized);
+            Settings.OnApplySettings.AddListener(OnSettingsApplied);
+        }
+
+        private void OnSettingsInitialized()
+        {
+            _settingsInitialized = true;
+
+            if (_modTab == null)
+                _modTab = Settings.GetOrAddCustomTab(ModInfo.NAME);
+
+            if (_modTab == null)
+            {
+                Log.LogWarning("Failed to get or add EasySettings tab.");
+                return;
+            }
+
+            if (!_globalToggleAdded)
+            {
+                _modTab.AddHeader("Global");
+                _modTab.AddToggle("Disable All NetNPCs", DisableAllNpcs);
+                _globalToggleAdded = true;
+            }
+
+            var newEntries = NpcToggles
+                .Where(kvp => !_npcNamesAddedToTab.Contains(kvp.Key))
+                .OrderBy(kvp => kvp.Key)
+                .ToList();
+
+            foreach (var kvp in newEntries)
+            {
+                _modTab.AddToggle(kvp.Key, kvp.Value);
+                _npcNamesAddedToTab.Add(kvp.Key);
+            }
+        }
+
+        private void OnSettingsApplied()
+        {
+            Config.Save();
+            ReapplyHiddenState();
+            Log.LogInfo($"[{ModInfo.NAME}] Settings applied and saved.");
         }
 
         private Scene GetCurrentMapScene()
@@ -127,7 +167,7 @@ namespace NPCDisabler
             }
 
             var allNetNpcsUnfiltered = FindObjectsOfType<NetNPC>(true);
-            Log.LogDebug($"[{ModInfo.NAME}][DEBUG] targetScene={targetScene.name} (handle={targetScene.handle}) | " +
+            Log.LogDebug($"[DEBUG] targetScene={targetScene.name} (handle={targetScene.handle}) | " +
                         $"playerScene={playerSceneInfo} | assignedMapInstance={assignedInstanceInfo} | " +
                         $"totalNetNPCsInMemory={allNetNpcsUnfiltered.Length}");
 
@@ -140,12 +180,12 @@ namespace NPCDisabler
                 string npcInstanceInfo = npcInstance != null
                     ? $"instanceID={npcInstance.GetInstanceID()}"
                     : "NOT PARENTED under a MapInstance";
-                Log.LogDebug($"[{ModInfo.NAME}][DEBUG]   NPC '{GetNpcIdentifier(npc)}' in scene {npcScene.name} " +
+                Log.LogDebug($"[DEBUG]   NPC '{GetNpcIdentifier(npc)}' in scene {npcScene.name} " +
                             $"(handle={npcScene.handle}) | parentMapInstance: {npcInstanceInfo} | " +
                             $"sceneMatch={sceneMatches} instanceMatch={instanceMatches}");
             }
 
-            var netNpcs = allNetNpcsUnfiltered
+            var netNpcs = FindObjectsOfType<NetNPC>(true)
                 .Where(npc =>
                 {
                     if (targetInstance != null)
@@ -181,8 +221,11 @@ namespace NPCDisabler
                     entry.SettingChanged += (s, e) => SetNpcHidden(npcName, IsEffectivelyHidden(npcName));
                     discoveredNew = true;
 
-                    if (_easySettingsAvailable && SettingsInitialized)
-                        EasySettingsIntegration.AddNpcToggle(npcName, entry);
+                    if (_settingsInitialized && _modTab != null && !_npcNamesAddedToTab.Contains(npcName))
+                    {
+                        _modTab.AddToggle(npcName, entry);
+                        _npcNamesAddedToTab.Add(npcName);
+                    }
                 }
             }
 
@@ -199,13 +242,13 @@ namespace NPCDisabler
             return npc.gameObject.name.Replace("(Clone)", string.Empty).Trim();
         }
 
-        private static bool IsEffectivelyHidden(string npcName)
+        private bool IsEffectivelyHidden(string npcName)
         {
             if (DisableAllNpcs.Value) return true;
             return NpcToggles.TryGetValue(npcName, out var entry) && entry.Value;
         }
 
-        private static void SetNpcHidden(string npcName, bool hide)
+        private void SetNpcHidden(string npcName, bool hide)
         {
             if (!NpcRegistry.TryGetValue(npcName, out var instances)) return;
 
@@ -224,7 +267,7 @@ namespace NPCDisabler
                         $"({instances.Count} instance(s)).");
         }
 
-        private static void ApplyHiddenState(GameObject npcGo, bool hide)
+        private void ApplyHiddenState(GameObject npcGo, bool hide)
         {
             bool isHost = Player._mainPlayer != null && Player._mainPlayer._isHostPlayer;
 
@@ -245,110 +288,16 @@ namespace NPCDisabler
 
             foreach (var animator in npcGo.GetComponentsInChildren<Animator>(true))
                 animator.enabled = !hide;
+            
+            foreach (var collider in npcGo.GetComponentsInChildren<Collider>(true))
+                collider.enabled = !hide;
         }
 
-        internal static void ReapplyHiddenState()
+        private void ReapplyHiddenState()
         {
             foreach (var npcName in NpcRegistry.Keys)
             {
                 SetNpcHidden(npcName, IsEffectivelyHidden(npcName));
-            }
-        }
-    }
-
-    internal static class EasySettingsIntegration
-    {
-        private static SettingsTab _modTab;
-        private static bool _globalToggleAdded;
-        private static readonly HashSet<string> _npcNamesAddedToTab = new HashSet<string>();
-
-        [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
-        public static void Init()
-        {
-            try
-            {
-                Settings.OnInitialized.AddListener(OnSettingsInitialized);
-                Settings.OnApplySettings.AddListener(OnSettingsApplied);
-            }
-            catch (Exception e)
-            {
-                Plugin.Log.LogWarning("Failed to register with EasySettings! Please report this to the mod author!");
-                Plugin.Log.LogWarning($"Exception: {e}");
-            }
-        }
-
-        [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
-        private static void OnSettingsInitialized()
-        {
-            try
-            {
-                Plugin.SettingsInitialized = true;
-
-                if (_modTab == null)
-                    _modTab = Settings.GetOrAddCustomTab(ModInfo.NAME);
-
-                if (_modTab == null)
-                {
-                    Plugin.Log.LogWarning("Failed to get or add EasySettings tab.");
-                    return;
-                }
-
-                if (!_globalToggleAdded)
-                {
-                    _modTab.AddHeader("Global");
-                    _modTab.AddToggle("Disable All NetNPCs", Plugin.DisableAllNpcs);
-                    _globalToggleAdded = true;
-                }
-
-                var newEntries = Plugin.NpcToggles
-                    .Where(kvp => !_npcNamesAddedToTab.Contains(kvp.Key))
-                    .OrderBy(kvp => kvp.Key)
-                    .ToList();
-
-                foreach (var kvp in newEntries)
-                {
-                    _modTab.AddToggle(kvp.Key, kvp.Value);
-                    _npcNamesAddedToTab.Add(kvp.Key);
-                }
-            }
-            catch (Exception e)
-            {
-                Plugin.Log.LogWarning("Failed to initialize EasySettings tab! Please report this to the mod author!");
-                Plugin.Log.LogWarning($"Exception: {e}");
-            }
-        }
-
-        [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
-        private static void OnSettingsApplied()
-        {
-            try
-            {
-                Plugin.Instance.Config.Save();
-                Plugin.ReapplyHiddenState();
-                Plugin.Log.LogInfo($"[{ModInfo.NAME}] Settings applied and saved.");
-            }
-            catch (Exception e)
-            {
-                Plugin.Log.LogWarning("Failed to apply EasySettings changes! Please report this to the mod author!");
-                Plugin.Log.LogWarning($"Exception: {e}");
-            }
-        }
-
-        [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
-        public static void AddNpcToggle(string npcName, ConfigEntry<bool> entry)
-        {
-            try
-            {
-                if (_modTab == null || _npcNamesAddedToTab.Contains(npcName))
-                    return;
-
-                _modTab.AddToggle(npcName, entry);
-                _npcNamesAddedToTab.Add(npcName);
-            }
-            catch (Exception e)
-            {
-                Plugin.Log.LogWarning($"Failed to add EasySettings toggle for '{npcName}'! Please report this to the mod author!");
-                Plugin.Log.LogWarning($"Exception: {e}");
             }
         }
     }
