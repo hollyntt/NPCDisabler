@@ -14,7 +14,7 @@ using UnityEngine.SceneManagement;
 namespace NPCDisabler
 {
     [BepInPlugin(ModInfo.GUID, ModInfo.NAME, ModInfo.VERSION)]
-    [BepInDependency(Plugin.EasySettingsGuid, BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency(Plugin.EasySettingsGuid)]
     public class Plugin : BaseUnityPlugin
     {
         internal const string EasySettingsGuid = "Nessie.ATLYSS.EasySettings";
