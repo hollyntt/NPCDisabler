@@ -48,8 +48,8 @@
         <Reference Include="$(AtlyssManaged)UnityEngine.InputLegacyModule.dll" Private="False" />
         <Reference Include="$(AtlyssManaged)UnityEngine.TextRenderingModule.dll" Private="False" />
         <Reference Include="$(AtlyssManaged)UnityEngine.UI.dll" Private="False" />
-        <PackageReference Include="Nessie-EasySettings" Version="1.3.0" Private="False" />
-        <PackageReference Include="Soggy_Pancake-CodeYapper" Version="2.2.2" Private="False"/>
+        <PackageReference Include="Nessie-EasySettings" Version="1.3.*" Private="False" />
+        <PackageReference Include="Soggy_Pancake-CodeYapper" Version="2.2.*" Private="False"/>
 
     </ItemGroup>
 
