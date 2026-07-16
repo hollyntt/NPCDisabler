@@ -162,4 +162,5 @@
   &lt;Assembly Path="\home\soap\.local\share\Steam\steamapps\common\ATLYSS\ATLYSS_Data\Managed\Assembly-CSharp.dll" /&gt;&#xD;
   &lt;Assembly Path="\home\soap\.local\share\com.kesomannen.gale\atlyss\profiles\Default\BepInEx\plugins\Soggy_Pancake-AtlyssCommandLib\AtlyssCommandLib.dll" /&gt;&#xD;
   &lt;Assembly Path="C:\Program Files (x86)\Steam\steamapps\common\ATLYSS\ATLYSS_Data\Managed\Assembly-CSharp.dll" /&gt;&#xD;
+  &lt;Assembly Path="C:\Users\Hollyn\.nuget\packages\nessie-easysettings\1.3.0\lib\netstandard2.0\EasySettings.dll" /&gt;&#xD;
 &lt;/AssemblyExplorer&gt;</s:String></wpf:ResourceDictionary>
