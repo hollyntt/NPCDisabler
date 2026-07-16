@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "y7P6CsORqe8=",
+  "dgSpecHash": "XmeSRnhOU3g=",
   "success": true,
   "projectFilePath": "D:\\Documents\\CODE\\Ours\\NPCDisabler\\NPCDisabler\\NPCDisabler.csproj",
   "expectedPackageFiles": [
@@ -15,7 +15,6 @@
     "C:\\Users\\Hollyn\\.nuget\\packages\\monomod.runtimedetour\\21.12.13.1\\monomod.runtimedetour.21.12.13.1.nupkg.sha512",
     "C:\\Users\\Hollyn\\.nuget\\packages\\monomod.utils\\21.12.13.1\\monomod.utils.21.12.13.1.nupkg.sha512",
     "C:\\Users\\Hollyn\\.nuget\\packages\\nessie-easysettings\\1.3.0\\nessie-easysettings.1.3.0.nupkg.sha512",
-    "C:\\Users\\Hollyn\\.nuget\\packages\\soggy_pancake-codeyapper\\2.2.2\\soggy_pancake-codeyapper.2.2.2.nupkg.sha512",
     "C:\\Users\\Hollyn\\.nuget\\packages\\system.collections\\4.3.0\\system.collections.4.3.0.nupkg.sha512",
     "C:\\Users\\Hollyn\\.nuget\\packages\\system.collections.nongeneric\\4.3.0\\system.collections.nongeneric.4.3.0.nupkg.sha512",
     "C:\\Users\\Hollyn\\.nuget\\packages\\system.collections.specialized\\4.3.0\\system.collections.specialized.4.3.0.nupkg.sha512",

@@ -179,15 +179,6 @@
           "lib/netstandard2.0/EasySettings.dll": {}
         }
       },
-      "Soggy_Pancake-CodeYapper/2.2.2": {
-        "type": "package",
-        "compile": {
-          "lib/netstandard2.0/CodeTalker.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard2.0/CodeTalker.dll": {}
-        }
-      },
       "System.Collections/4.3.0": {
         "type": "package",
         "dependencies": {
@@ -923,17 +914,6 @@
         "lib/netstandard2.0/EasySettings.dll",
         "nessie-easysettings.1.3.0.nupkg.sha512",
         "nessie-easysettings.nuspec"
-      ]
-    },
-    "Soggy_Pancake-CodeYapper/2.2.2": {
-      "sha512": "TyiUF2SkKGbVPCYyJ52YCjiaVOAiUm81phlGUQzJRoIxliw87IZwzqlLT10MqVwRcWglzgvbHc1WdNPg3u6RpQ==",
-      "type": "package",
-      "path": "soggy_pancake-codeyapper/2.2.2",
-      "files": [
-        ".nupkg.metadata",
-        "lib/netstandard2.0/CodeTalker.dll",
-        "soggy_pancake-codeyapper.2.2.2.nupkg.sha512",
-        "soggy_pancake-codeyapper.nuspec"
       ]
     },
     "System.Collections/4.3.0": {
@@ -2823,7 +2803,6 @@
       "BepInEx.AssemblyPublicizer.MSBuild >= 0.4.2",
       "BepInEx.Core >= 5.4.*",
       "Nessie-EasySettings >= 1.3.*",
-      "Soggy_Pancake-CodeYapper >= 2.2.*",
       "UnityEngine.Modules >= 2022.3.62"
     ]
   },
@@ -2890,10 +2869,6 @@
           "Nessie-EasySettings": {
             "target": "Package",
             "version": "[1.3.*, )"
-          },
-          "Soggy_Pancake-CodeYapper": {
-            "target": "Package",
-            "version": "[2.2.*, )"
           },
           "UnityEngine.Modules": {
             "suppressParent": "All",

@@ -7,7 +7,6 @@ D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\AsmResol
 D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\BepInEx.AssemblyPublicizer.MSBuild.dll
 D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\BepInEx.AssemblyPublicizer.dll
 D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\EasySettings.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\CodeTalker.dll
 D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\System.Collections.NonGeneric.dll
 D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\System.Collections.Specialized.dll
 D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\System.ComponentModel.dll
