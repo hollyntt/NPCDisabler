@@ -1,6 +1,6 @@
 is_global = true
 build_property.RootNamespace = NPCDisabler
-build_property.ProjectDir = D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\
+build_property.ProjectDir = /run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.CsWinRTUseWindowsUIXamlProjections = false

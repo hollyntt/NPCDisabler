@@ -1,94 +1,188 @@
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\NPCDisabler.deps.json
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\NPCDisabler.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\AsmResolver.DotNet.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\AsmResolver.PE.File.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\AsmResolver.PE.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\AsmResolver.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\BepInEx.AssemblyPublicizer.MSBuild.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\BepInEx.AssemblyPublicizer.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\EasySettings.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\System.Collections.NonGeneric.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\System.Collections.Specialized.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\System.ComponentModel.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\System.ComponentModel.Primitives.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\System.ComponentModel.TypeConverter.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\System.IO.FileSystem.Primitives.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\System.Linq.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\System.Reflection.TypeExtensions.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\System.Threading.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.AIModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.AccessibilityModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.AndroidJNIModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.AnimationModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.AssetBundleModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.AudioModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.ClothModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.ClusterInputModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.ClusterRendererModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.ContentLoadModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.CoreModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.CrashReportingModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.DSPGraphModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.DirectorModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.GIModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.GameCenterModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.GridModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.HotReloadModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.IMGUIModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.ImageConversionModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.InputLegacyModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.InputModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.JSONSerializeModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.LocalizationModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.ParticleSystemModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.PerformanceReportingModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.Physics2DModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.PhysicsModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.ProfilerModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.PropertiesModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.ScreenCaptureModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.SharedInternalsModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.SpriteMaskModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.SpriteShapeModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.StreamingModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.SubstanceModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.SubsystemsModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.TLSModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.TerrainModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.TerrainPhysicsModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.TextCoreFontEngineModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.TextCoreTextEngineModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.TextRenderingModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.TilemapModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.UIElementsModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.UIModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.UmbraModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.UnityAnalyticsCommonModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.UnityAnalyticsModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.UnityConnectModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.UnityCurlModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.UnityTestProtocolModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.UnityWebRequestAssetBundleModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.UnityWebRequestAudioModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.UnityWebRequestModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.UnityWebRequestTextureModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.UnityWebRequestWWWModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.VFXModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.VRModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.VehiclesModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.VideoModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.VirtualTexturingModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.WindModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.XRModule.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\bin\Debug\netstandard2.1\UnityEngine.dll
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\obj\Debug\netstandard2.1\NPCDisabler.csproj.AssemblyReference.cache
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\obj\Debug\netstandard2.1\NPCDisabler.IgnoresAccessChecksTo.cs
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\obj\Debug\netstandard2.1\NPCDisabler.GeneratedMSBuildEditorConfig.editorconfig
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\obj\Debug\netstandard2.1\GeneratedModInfo.cs
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\obj\Debug\netstandard2.1\NPCDisabler.AssemblyInfoInputs.cache
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\obj\Debug\netstandard2.1\NPCDisabler.AssemblyInfo.cs
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\obj\Debug\netstandard2.1\NPCDisabler.csproj.CoreCompileInputs.cache
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\obj\Debug\netstandard2.1\NPCDisabler.sourcelink.json
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\obj\Debug\netstandard2.1\NPCDisab.7DC7CCCE.Up2Date
-D:\Documents\CODE\Ours\NPCDisabler\NPCDisabler\obj\Debug\netstandard2.1\NPCDisabler.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/NPCDisabler.deps.json
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/NPCDisabler.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/AsmResolver.DotNet.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/AsmResolver.PE.File.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/AsmResolver.PE.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/AsmResolver.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/BepInEx.AssemblyPublicizer.MSBuild.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/BepInEx.AssemblyPublicizer.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/EasySettings.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/System.Collections.NonGeneric.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/System.Collections.Specialized.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/System.ComponentModel.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/System.ComponentModel.Primitives.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/System.ComponentModel.TypeConverter.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/System.IO.FileSystem.Primitives.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/System.Linq.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/System.Reflection.TypeExtensions.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/System.Threading.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.AIModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.AccessibilityModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.AndroidJNIModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.AnimationModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.AssetBundleModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.AudioModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.ClothModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.ClusterInputModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.ClusterRendererModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.ContentLoadModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.CoreModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.CrashReportingModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.DSPGraphModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.DirectorModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.GIModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.GameCenterModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.GridModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.HotReloadModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.IMGUIModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.ImageConversionModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.InputLegacyModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.InputModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.JSONSerializeModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.LocalizationModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.ParticleSystemModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.PerformanceReportingModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.Physics2DModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.PhysicsModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.ProfilerModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.PropertiesModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.ScreenCaptureModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.SharedInternalsModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.SpriteMaskModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.SpriteShapeModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.StreamingModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.SubstanceModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.SubsystemsModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.TLSModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.TerrainModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.TerrainPhysicsModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.TextCoreFontEngineModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.TextCoreTextEngineModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.TextRenderingModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.TilemapModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.UIElementsModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.UIModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.UmbraModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.UnityAnalyticsCommonModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.UnityAnalyticsModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.UnityConnectModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.UnityCurlModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.UnityTestProtocolModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.UnityWebRequestAssetBundleModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.UnityWebRequestAudioModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.UnityWebRequestModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.UnityWebRequestTextureModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.UnityWebRequestWWWModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.VFXModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.VRModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.VehiclesModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.VideoModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.VirtualTexturingModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.WindModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.XRModule.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.dll
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/obj/Debug/netstandard2.1/NPCDisabler.csproj.AssemblyReference.cache
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/obj/Debug/netstandard2.1/NPCDisabler.IgnoresAccessChecksTo.cs
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/obj/Debug/netstandard2.1/NPCDisabler.GeneratedMSBuildEditorConfig.editorconfig
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/obj/Debug/netstandard2.1/GeneratedModInfo.cs
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/obj/Debug/netstandard2.1/NPCDisabler.AssemblyInfoInputs.cache
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/obj/Debug/netstandard2.1/NPCDisabler.AssemblyInfo.cs
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/obj/Debug/netstandard2.1/NPCDisabler.csproj.CoreCompileInputs.cache
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/obj/Debug/netstandard2.1/NPCDisabler.sourcelink.json
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/obj/Debug/netstandard2.1/NPCDisab.7DC7CCCE.Up2Date
+D:/Documents/CODE/Ours/NPCDisabler/NPCDisabler/obj/Debug/netstandard2.1/NPCDisabler.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/NPCDisabler.deps.json
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/NPCDisabler.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/AsmResolver.DotNet.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/AsmResolver.PE.File.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/AsmResolver.PE.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/AsmResolver.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/BepInEx.AssemblyPublicizer.MSBuild.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/BepInEx.AssemblyPublicizer.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/EasySettings.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/System.Collections.NonGeneric.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/System.Collections.Specialized.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/System.ComponentModel.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/System.ComponentModel.Primitives.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/System.ComponentModel.TypeConverter.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/System.IO.FileSystem.Primitives.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/System.Linq.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/System.Reflection.TypeExtensions.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/System.Threading.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.AIModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.AccessibilityModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.AndroidJNIModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.AnimationModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.AssetBundleModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.AudioModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.ClothModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.ClusterInputModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.ClusterRendererModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.ContentLoadModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.CoreModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.CrashReportingModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.DSPGraphModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.DirectorModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.GIModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.GameCenterModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.GridModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.HotReloadModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.IMGUIModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.ImageConversionModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.InputLegacyModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.InputModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.JSONSerializeModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.LocalizationModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.ParticleSystemModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.PerformanceReportingModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.Physics2DModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.PhysicsModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.ProfilerModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.PropertiesModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.ScreenCaptureModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.SharedInternalsModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.SpriteMaskModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.SpriteShapeModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.StreamingModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.SubstanceModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.SubsystemsModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.TLSModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.TerrainModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.TerrainPhysicsModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.TextCoreFontEngineModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.TextCoreTextEngineModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.TextRenderingModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.TilemapModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.UIElementsModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.UIModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.UmbraModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.UnityAnalyticsCommonModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.UnityAnalyticsModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.UnityConnectModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.UnityCurlModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.UnityTestProtocolModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.UnityWebRequestAssetBundleModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.UnityWebRequestAudioModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.UnityWebRequestModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.UnityWebRequestTextureModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.UnityWebRequestWWWModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.VFXModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.VRModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.VehiclesModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.VideoModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.VirtualTexturingModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.WindModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.XRModule.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/bin/Debug/netstandard2.1/UnityEngine.dll
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/obj/Debug/netstandard2.1/NPCDisabler.csproj.AssemblyReference.cache
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/obj/Debug/netstandard2.1/NPCDisabler.IgnoresAccessChecksTo.cs
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/obj/Debug/netstandard2.1/NPCDisabler.GeneratedMSBuildEditorConfig.editorconfig
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/obj/Debug/netstandard2.1/GeneratedModInfo.cs
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/obj/Debug/netstandard2.1/NPCDisabler.AssemblyInfoInputs.cache
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/obj/Debug/netstandard2.1/NPCDisabler.AssemblyInfo.cs
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/obj/Debug/netstandard2.1/NPCDisabler.csproj.CoreCompileInputs.cache
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/obj/Debug/netstandard2.1/NPCDisabler.sourcelink.json
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/obj/Debug/netstandard2.1/NPCDisab.7DC7CCCE.Up2Date
+/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/obj/Debug/netstandard2.1/NPCDisabler.dll

@@ -5,6 +5,7 @@ using HarmonyLib;
 using Nessie.ATLYSS.EasySettings;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -18,6 +19,9 @@ namespace NPCDisabler
         public static Plugin Instance;
         internal static ManualLogSource Log;
         private readonly Harmony harmony = new Harmony(ModInfo.GUID);
+
+        private const string NpcSection = "NPCs";
+        private static readonly char[] InvalidKeyChars = { '=', '\n', '\t', '\\', '"', '\'', '[', ']' };
 
         private static readonly Dictionary<string, ConfigEntry<bool>> NpcToggles = new Dictionary<string, ConfigEntry<bool>>();
         private static ConfigEntry<bool> DisableAllNpcs;
@@ -44,7 +48,11 @@ namespace NPCDisabler
                 "Overrides individual NPC toggles below while enabled.");
             DisableAllNpcs.SettingChanged += (s, e) => ReapplyHiddenState();
 
-            Log.LogInfo($"{ModInfo.NAME} v{ModInfo.VERSION} Loaded.");
+            // Pre-bind NPCs saved from previous sessions (or hand-edited into the config)
+            // so their toggles exist before EasySettings builds the menu.
+            PreBindKnownNpcs();
+
+            Log.LogInfo($"{ModInfo.NAME} v{ModInfo.VERSION} Loaded. ({NpcToggles.Count} known NPC(s) from config)");
 
             SceneManager.sceneLoaded += OnSceneLoaded;
             InitEasySettingsSafe();
@@ -79,6 +87,79 @@ namespace NPCDisabler
             _currentTargetScene = default;
         }
 
+        // ---------- Config helpers ----------
+
+        private static string SanitizeKey(string name)
+        {
+            if (string.IsNullOrEmpty(name)) return "Unknown";
+            string cleaned = string.Concat(name.Select(c => InvalidKeyChars.Contains(c) ? '_' : c)).Trim();
+            return cleaned.Length == 0 ? "Unknown" : cleaned;
+        }
+
+        // Reads the [NPCs] section straight from the config file on disk.
+        private void PreBindKnownNpcs()
+        {
+            try
+            {
+                string path = Config.ConfigFilePath;
+                if (string.IsNullOrEmpty(path) || !File.Exists(path)) return;
+
+                var names = new List<string>();
+                bool inNpcSection = false;
+
+                foreach (var raw in File.ReadAllLines(path))
+                {
+                    string line = raw.Trim();
+                    if (line.Length == 0 || line.StartsWith("#")) continue;
+
+                    if (line.StartsWith("[") && line.EndsWith("]"))
+                    {
+                        inNpcSection = line.Substring(1, line.Length - 2) == NpcSection;
+                        continue;
+                    }
+
+                    if (!inNpcSection) continue;
+
+                    int eq = line.IndexOf('=');
+                    if (eq <= 0) continue;
+
+                    names.Add(line.Substring(0, eq).Trim());
+                }
+
+                foreach (var name in names)
+                    EnsureNpcEntry(name);
+            }
+            catch (Exception e)
+            {
+                Log.LogWarning($"Failed to pre-bind NPCs from config: {e.Message}");
+            }
+        }
+
+        // Returns true if a new entry was created.
+        private bool EnsureNpcEntry(string npcName)
+        {
+            if (NpcToggles.ContainsKey(npcName)) return false;
+
+            ConfigEntry<bool> entry;
+            try
+            {
+                entry = Config.Bind(NpcSection, npcName, false,
+                    $"Hide '{npcName}' client-side when encountered. Does not affect other players. " +
+                    "Overridden by 'Disable All NetNPCs' above while that's enabled.");
+            }
+            catch (Exception e)
+            {
+                Log.LogWarning($"Couldn't bind config for NPC '{npcName}': {e.Message}");
+                return false;
+            }
+
+            NpcToggles[npcName] = entry;
+            entry.SettingChanged += (s, e) => SetNpcHidden(npcName, IsEffectivelyHidden(npcName));
+            return true;
+        }
+
+        // ---------- EasySettings ----------
+
         private void InitEasySettingsSafe()
         {
             Settings.OnInitialized.AddListener(OnSettingsInitialized);
@@ -88,7 +169,18 @@ namespace NPCDisabler
         private void OnSettingsInitialized()
         {
             _settingsInitialized = true;
+            RefreshSettingsTab();
+        }
 
+        private void OnSettingsApplied()
+        {
+            Config.Save();
+            ReapplyHiddenState();
+            Log.LogInfo($"[{ModInfo.NAME}] Settings applied and saved.");
+        }
+
+        private void RefreshSettingsTab()
+        {
             if (_modTab == null)
                 _modTab = Settings.GetOrAddCustomTab(ModInfo.NAME);
 
@@ -110,19 +202,24 @@ namespace NPCDisabler
                 .OrderBy(kvp => kvp.Key)
                 .ToList();
 
+            if (newEntries.Count > 0 && _npcNamesAddedToTab.Count == 0)
+                _modTab.AddHeader("NPCs");
+
             foreach (var kvp in newEntries)
             {
-                _modTab.AddToggle(kvp.Key, kvp.Value);
-                _npcNamesAddedToTab.Add(kvp.Key);
+                try
+                {
+                    _modTab.AddToggle(kvp.Key, kvp.Value);
+                    _npcNamesAddedToTab.Add(kvp.Key);
+                }
+                catch (Exception e)
+                {
+                    Log.LogWarning($"Failed to add toggle for '{kvp.Key}': {e.Message}");
+                }
             }
         }
 
-        private void OnSettingsApplied()
-        {
-            Config.Save();
-            ReapplyHiddenState();
-            Log.LogInfo($"[{ModInfo.NAME}] Settings applied and saved.");
-        }
+        // ---------- Scene / NPC scanning ----------
 
         private Scene GetCurrentMapScene()
         {
@@ -152,6 +249,8 @@ namespace NPCDisabler
                 ? Player._mainPlayer.Network_playerMapInstance
                 : null;
 
+            var allNetNpcsUnfiltered = FindObjectsOfType<NetNPC>(true);
+
             string playerSceneInfo = "null";
             string assignedInstanceInfo = "null";
             if (Player._mainPlayer != null)
@@ -166,36 +265,20 @@ namespace NPCDisabler
                 }
             }
 
-            var allNetNpcsUnfiltered = FindObjectsOfType<NetNPC>(true);
             Log.LogDebug($"[DEBUG] targetScene={targetScene.name} (handle={targetScene.handle}) | " +
                         $"playerScene={playerSceneInfo} | assignedMapInstance={assignedInstanceInfo} | " +
                         $"totalNetNPCsInMemory={allNetNpcsUnfiltered.Length}");
 
-            foreach (var npc in allNetNpcsUnfiltered)
+            var netNpcs = allNetNpcsUnfiltered.Where(npc =>
             {
-                Scene npcScene = npc.gameObject.scene;
-                MapInstance npcInstance = npc.GetComponentInParent<MapInstance>(true);
-                bool sceneMatches = npcScene == targetScene;
-                bool instanceMatches = npcInstance != null && targetInstance != null && npcInstance == targetInstance;
-                string npcInstanceInfo = npcInstance != null
-                    ? $"instanceID={npcInstance.GetInstanceID()}"
-                    : "NOT PARENTED under a MapInstance";
-                Log.LogDebug($"[DEBUG]   NPC '{GetNpcIdentifier(npc)}' in scene {npcScene.name} " +
-                            $"(handle={npcScene.handle}) | parentMapInstance: {npcInstanceInfo} | " +
-                            $"sceneMatch={sceneMatches} instanceMatch={instanceMatches}");
-            }
-
-            var netNpcs = FindObjectsOfType<NetNPC>(true)
-                .Where(npc =>
+                if (targetInstance != null)
                 {
-                    if (targetInstance != null)
-                    {
-                        MapInstance npcInstance = npc.GetComponentInParent<MapInstance>(true);
-                        if (npcInstance != null)
-                            return npcInstance == targetInstance;
-                    }
-                    return npc.gameObject.scene == targetScene;
-                });
+                    MapInstance npcInstance = npc.GetComponentInParent<MapInstance>(true);
+                    if (npcInstance != null)
+                        return npcInstance == targetInstance;
+                }
+                return npc.gameObject.scene == targetScene;
+            });
 
             bool discoveredNew = false;
 
@@ -212,26 +295,15 @@ namespace NPCDisabler
                 if (!list.Contains(npc.gameObject))
                     list.Add(npc.gameObject);
 
-                if (!NpcToggles.ContainsKey(npcName))
-                {
-                    var entry = Config.Bind("NPCs", npcName, false,
-                        $"Hide '{npcName}' client-side when encountered. Does not affect other players. " +
-                        "Overridden by 'Disable All NetNPCs' above while that's enabled.");
-                    NpcToggles[npcName] = entry;
-                    entry.SettingChanged += (s, e) => SetNpcHidden(npcName, IsEffectivelyHidden(npcName));
+                if (EnsureNpcEntry(npcName))
                     discoveredNew = true;
-
-                    if (_settingsInitialized && _modTab != null && !_npcNamesAddedToTab.Contains(npcName))
-                    {
-                        _modTab.AddToggle(npcName, entry);
-                        _npcNamesAddedToTab.Add(npcName);
-                    }
-                }
             }
 
             if (discoveredNew)
             {
-                Log.LogInfo($"[{ModInfo.NAME}] Discovered {NpcToggles.Count} unique NPC type(s) in scene: {targetScene.name}");
+                Log.LogInfo($"[{ModInfo.NAME}] Discovered new NPC type(s); {NpcToggles.Count} known in total. Scene: {targetScene.name}");
+                if (_settingsInitialized)
+                    RefreshSettingsTab();
             }
 
             ReapplyHiddenState();
@@ -239,7 +311,7 @@ namespace NPCDisabler
 
         private string GetNpcIdentifier(NetNPC npc)
         {
-            return npc.gameObject.name.Replace("(Clone)", string.Empty).Trim();
+            return SanitizeKey(npc.gameObject.name.Replace("(Clone)", string.Empty).Trim());
         }
 
         private bool IsEffectivelyHidden(string npcName)
@@ -288,14 +360,14 @@ namespace NPCDisabler
 
             foreach (var animator in npcGo.GetComponentsInChildren<Animator>(true))
                 animator.enabled = !hide;
-            
+
             foreach (var collider in npcGo.GetComponentsInChildren<Collider>(true))
                 collider.enabled = !hide;
         }
 
         private void ReapplyHiddenState()
         {
-            foreach (var npcName in NpcRegistry.Keys)
+            foreach (var npcName in NpcRegistry.Keys.ToList())
             {
                 SetNpcHidden(npcName, IsEffectivelyHidden(npcName));
             }

@@ -1,21 +1,21 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Documents\\CODE\\Ours\\NPCDisabler\\NPCDisabler\\NPCDisabler.csproj": {}
+    "/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/NPCDisabler.csproj": {}
   },
   "projects": {
-    "D:\\Documents\\CODE\\Ours\\NPCDisabler\\NPCDisabler\\NPCDisabler.csproj": {
-      "version": "1.0.2",
+    "/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/NPCDisabler.csproj": {
+      "version": "1.0.3",
       "restore": {
-        "projectUniqueName": "D:\\Documents\\CODE\\Ours\\NPCDisabler\\NPCDisabler\\NPCDisabler.csproj",
+        "projectUniqueName": "/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/NPCDisabler.csproj",
         "projectName": "Player Moderation",
-        "projectPath": "D:\\Documents\\CODE\\Ours\\NPCDisabler\\NPCDisabler\\NPCDisabler.csproj",
-        "packagesPath": "C:\\Users\\Hollyn\\.nuget\\packages\\",
-        "outputPath": "D:\\Documents\\CODE\\Ours\\NPCDisabler\\NPCDisabler\\obj\\",
+        "projectPath": "/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/NPCDisabler.csproj",
+        "packagesPath": "/home/hollyn/.nuget/packages/",
+        "outputPath": "/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/NPCDisabler/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "D:\\Documents\\CODE\\Ours\\NPCDisabler\\NuGet.Config",
-          "C:\\Users\\Hollyn\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/run/media/hollyn/The Main Dr/Documents/CODE/Ours/NPCDisabler/nuget.config",
+          "/home/hollyn/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netstandard2.1"
@@ -42,7 +42,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.300"
+        "SdkAnalysisLevel": "10.0.100"
       },
       "frameworks": {
         "netstandard2.1": {
@@ -84,12 +84,18 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "NETStandard.Library.Ref",
+              "version": "[2.1.0, 2.1.0]"
+            }
+          ],
           "frameworkReferences": {
             "NETStandard.Library": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.315\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/10.0.114/RuntimeIdentifierGraph.json"
         }
       }
     }
